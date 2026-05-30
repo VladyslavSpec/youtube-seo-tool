@@ -3,3 +3,4 @@ uvicorn==0.48.0
 python-multipart
 aiofiles
 pydantic>=2.9.0
+anthropic
