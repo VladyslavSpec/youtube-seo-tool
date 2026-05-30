@@ -136,6 +136,7 @@
   <div class="logo"><span class="logo-dot"></span>TubeRank</div>
   <div class="nav-links">
     <a href="#" onclick="showTab('generator')" id="tab-generator">Generator</a>
+    <a href="#" onclick="showTab('tools')" id="tab-tools">Tools</a>
     <a href="#" onclick="showTab('pricing')" id="tab-pricing">Pricing</a>
   </div>
   <div style="display:flex;align-items:center;gap:0.75rem">
@@ -221,6 +222,59 @@
   </div>
 </div>
 
+</div>
+
+<div id="page-tools" style="display:none">
+<section style="max-width:720px;margin:3rem auto;padding:0 2.5rem">
+  <div class="pricing-label">Tools</div>
+  <h2 class="pricing-head">Individual SEO Tools</h2>
+  <p class="pricing-sub">Use each tool separately for quick results.</p>
+
+  <div style="display:flex;flex-direction:column;gap:1.5rem;margin-top:2rem">
+
+    <!-- Hashtag Generator -->
+    <div class="output-card">
+      <div class="oc-header"><span class="oc-tag" style="background:rgba(99,179,237,0.12);color:#63b3ed">Hashtag Generator</span></div>
+      <p style="color:var(--muted);font-size:0.85rem;margin:0.5rem 0 1rem">Generate 10 trending YouTube hashtags for your video topic.</p>
+      <div class="input-wrap" style="margin:0 0 0.75rem">
+        <input type="text" id="tool-hashtag-input" placeholder="Enter your video topic…" />
+        <button class="gen-btn" onclick="toolGenerate('hashtag')">Generate →</button>
+      </div>
+      <div class="tags-row" id="tool-hashtag-output" style="margin-top:0.5rem;min-height:1.5rem"></div>
+      <div id="tool-hashtag-copy" style="display:none;margin-top:0.75rem">
+        <button class="copy-btn" style="font-size:0.8rem;padding:0.3rem 0.75rem" onclick="copyRaw('tool-hashtag-raw')">Copy all</button>
+        <span id="tool-hashtag-raw" style="display:none"></span>
+      </div>
+    </div>
+
+    <!-- Tag Generator -->
+    <div class="output-card">
+      <div class="oc-header"><span class="oc-tag tag-tags">Tag Generator</span></div>
+      <p style="color:var(--muted);font-size:0.85rem;margin:0.5rem 0 1rem">Generate 15 SEO tags to maximize your video's discoverability.</p>
+      <div class="input-wrap" style="margin:0 0 0.75rem">
+        <input type="text" id="tool-tags-input" placeholder="Enter your video topic…" />
+        <button class="gen-btn" onclick="toolGenerate('tags')">Generate →</button>
+      </div>
+      <div class="tags-row" id="tool-tags-output" style="margin-top:0.5rem;min-height:1.5rem"></div>
+      <div id="tool-tags-copy" style="display:none;margin-top:0.75rem">
+        <button class="copy-btn" style="font-size:0.8rem;padding:0.3rem 0.75rem" onclick="copyRaw('tool-tags-raw')">Copy all</button>
+        <span id="tool-tags-raw" style="display:none"></span>
+      </div>
+    </div>
+
+    <!-- Title Generator -->
+    <div class="output-card">
+      <div class="oc-header"><span class="oc-tag tag-title">Title Generator</span></div>
+      <p style="color:var(--muted);font-size:0.85rem;margin:0.5rem 0 1rem">Generate 5 high-CTR title variations for your video.</p>
+      <div class="input-wrap" style="margin:0 0 0.75rem">
+        <input type="text" id="tool-title-input" placeholder="Enter your video topic…" />
+        <button class="gen-btn" onclick="toolGenerate('title')">Generate →</button>
+      </div>
+      <div id="tool-title-output" style="margin-top:0.5rem;min-height:1.5rem;display:flex;flex-direction:column;gap:0.5rem"></div>
+    </div>
+
+  </div>
+</section>
 </div>
 
 <div id="page-pricing" style="display:none">
@@ -361,10 +415,58 @@ if (localStorage.getItem('theme') === 'light') {
 }
 
 function showTab(tab) {
-  document.getElementById('page-generator').style.display = tab === 'generator' ? 'block' : 'none';
-  document.getElementById('page-pricing').style.display = tab === 'pricing' ? 'block' : 'none';
-  document.getElementById('tab-generator').style.color = tab === 'generator' ? 'var(--text)' : 'var(--muted)';
-  document.getElementById('tab-pricing').style.color = tab === 'pricing' ? 'var(--text)' : 'var(--muted)';
+  ['generator','tools','pricing'].forEach(t => {
+    document.getElementById('page-'+t).style.display = t === tab ? 'block' : 'none';
+    document.getElementById('tab-'+t).style.color = t === tab ? 'var(--text)' : 'var(--muted)';
+  });
+}
+
+async function toolGenerate(type) {
+  const inputs = {hashtag:'tool-hashtag-input', tags:'tool-tags-input', title:'tool-title-input'};
+  const topic = document.getElementById(inputs[type]).value.trim();
+  if (!topic) return;
+
+  const prompts = {
+    hashtag: `Generate 10 trending YouTube hashtags for a video about: "${topic}". Return ONLY a JSON array of hashtag strings with # symbol. No other text.`,
+    tags: `Generate 15 SEO tags for a YouTube video about: "${topic}". Return ONLY a JSON array of tag strings without # symbol. No other text.`,
+    title: `Generate 5 high-CTR YouTube title variations for a video about: "${topic}". Return ONLY a JSON array of 5 title strings. No other text.`
+  };
+
+  const btn = event.target;
+  btn.textContent = '…';
+  btn.disabled = true;
+
+  try {
+    const res = await fetch('/tool-generate', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({type, topic, tier: getTier()})
+    });
+    if (res.status === 429) { alert('Daily limit reached. Upgrade to Pro.'); return; }
+    const data = await res.json();
+
+    if (type === 'hashtag') {
+      document.getElementById('tool-hashtag-output').innerHTML = data.result.map(h => `<span class="tag-pill" style="color:#63b3ed;border-color:rgba(99,179,237,0.2)">${h}</span>`).join('');
+      document.getElementById('tool-hashtag-raw').textContent = data.result.join(' ');
+      document.getElementById('tool-hashtag-copy').style.display = 'block';
+    } else if (type === 'tags') {
+      document.getElementById('tool-tags-output').innerHTML = data.result.map(t => `<span class="tag-pill">${t}</span>`).join('');
+      document.getElementById('tool-tags-raw').textContent = data.result.join(', ');
+      document.getElementById('tool-tags-copy').style.display = 'block';
+    } else if (type === 'title') {
+      document.getElementById('tool-title-output').innerHTML = data.result.map((t,i) => `<div style="background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:0.65rem 1rem;font-size:0.9rem;display:flex;justify-content:space-between;align-items:center;gap:1rem"><span>${t}</span><button class="copy-btn" onclick="navigator.clipboard.writeText(this.previousElementSibling.textContent)">Copy</button></div>`).join('');
+    }
+  } catch(e) {
+    alert('Error. Please try again.');
+  } finally {
+    btn.textContent = 'Generate →';
+    btn.disabled = false;
+  }
+}
+
+function copyRaw(id) {
+  const text = document.getElementById(id).textContent;
+  navigator.clipboard.writeText(text);
 }
 
 async function startCheckout() {

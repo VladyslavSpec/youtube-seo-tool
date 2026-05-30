@@ -121,6 +121,38 @@ async def generate_seo(request: SeoRequest, req: Request):
     }
 
 
+class ToolRequest(BaseModel):
+    type: str
+    topic: str
+    tier: str = "free"
+
+
+TOOL_PROMPTS = {
+    "hashtag": 'Generate 10 trending YouTube hashtags for a video about: "{topic}". Return ONLY a JSON array of hashtag strings with # symbol. No other text.',
+    "tags": 'Generate 15 SEO tags for a YouTube video about: "{topic}". Return ONLY a JSON array of tag strings without # symbol. No other text.',
+    "title": 'Generate 5 high-CTR YouTube title variations for a video about: "{topic}". Return ONLY a JSON array of 5 title strings. No other text.',
+}
+
+
+@app.post("/tool-generate")
+async def tool_generate(request: ToolRequest, req: Request):
+    import json as json_lib
+    ip = get_client_ip(req)
+    check_rate_limit(ip, request.tier)
+    prompt = TOOL_PROMPTS.get(request.type, "").format(topic=request.topic)
+    message = client.messages.create(
+        model="claude-haiku-4-5-20251001",
+        max_tokens=512,
+        messages=[{"role": "user", "content": prompt}],
+    )
+    text = message.content[0].text.strip()
+    if text.startswith("```"):
+        text = text.split("```")[1]
+        if text.startswith("json"):
+            text = text[4:]
+    return {"result": json_lib.loads(text.strip())}
+
+
 @app.post("/create-checkout-session")
 async def create_checkout_session(req: Request):
     base_url = str(req.base_url).rstrip("/")
