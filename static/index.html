@@ -5,11 +5,19 @@
   :root{
     --bg:#0a0a0b;--surface:#111113;--surface2:#18181c;--border:#2a2a30;
     --text:#f0f0f2;--muted:#8a8a94;--accent:#e8ff5a;--accent2:#ff6b35;
-    --pro:#a78bfa;
+    --pro:#a78bfa;--nav-bg:rgba(10,10,11,0.9);
   }
-  body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;min-height:100vh;overflow-x:hidden}
+  :root.light{
+    --bg:#f8f8f6;--surface:#ffffff;--surface2:#f0f0ee;--border:#e2e2de;
+    --text:#111113;--muted:#6a6a74;--accent:#6c4eff;--accent2:#ff6b35;
+    --pro:#7c3aed;--nav-bg:rgba(248,248,246,0.9);
+  }
+  body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;min-height:100vh;overflow-x:hidden;transition:background .3s,color .3s}
 
-  nav{display:flex;justify-content:space-between;align-items:center;padding:1.25rem 2.5rem;border-bottom:1px solid var(--border);position:sticky;top:0;background:rgba(10,10,11,0.9);backdrop-filter:blur(12px);z-index:99}
+  .theme-toggle{background:var(--surface2);border:1px solid var(--border);border-radius:99px;padding:0.3rem 0.75rem;cursor:pointer;font-size:0.8rem;color:var(--muted);font-family:'DM Sans',sans-serif;transition:all .2s;display:flex;align-items:center;gap:5px}
+  .theme-toggle:hover{color:var(--text);border-color:var(--muted)}
+
+  nav{display:flex;justify-content:space-between;align-items:center;padding:1.25rem 2.5rem;border-bottom:1px solid var(--border);position:sticky;top:0;background:var(--nav-bg);backdrop-filter:blur(12px);z-index:99;transition:background .3s}
   .logo{font-family:'Syne',sans-serif;font-weight:800;font-size:1.15rem;letter-spacing:-0.02em;display:flex;align-items:center;gap:8px}
   .logo-dot{width:8px;height:8px;background:var(--accent);border-radius:50%;display:inline-block}
   .nav-links{display:flex;gap:2rem;font-size:0.875rem;color:var(--muted)}
@@ -102,7 +110,10 @@
     <a href="#">Features</a>
     <a href="#pricing">Pricing</a>
   </div>
-  <button class="nav-cta">Get started free</button>
+  <div style="display:flex;align-items:center;gap:0.75rem">
+    <button class="theme-toggle" onclick="toggleTheme()" id="theme-btn">☀️ Light</button>
+    <button class="nav-cta">Get started free</button>
+  </div>
 </nav>
 
 <section class="hero">
@@ -266,4 +277,16 @@ function copyText(btn, id) {
 document.getElementById('topic-input').addEventListener('keydown', e => {
   if (e.key === 'Enter') generate();
 });
+
+function toggleTheme() {
+  const isLight = document.documentElement.classList.toggle('light');
+  document.getElementById('theme-btn').textContent = isLight ? '🌙 Dark' : '☀️ Light';
+  localStorage.setItem('theme', isLight ? 'light' : 'dark');
+}
+
+// Применить сохранённую тему при загрузке
+if (localStorage.getItem('theme') === 'light') {
+  document.documentElement.classList.add('light');
+  document.getElementById('theme-btn').textContent = '🌙 Dark';
+}
 </script>
