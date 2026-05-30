@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TubeRank Pro — Activated</title>
+<link rel="icon" type="image/svg+xml" href="/static/favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:#0a0a0b;color:#f0f0f2;font-family:'DM Sans',sans-serif;min-height:100vh;display:flex;align-items:center;justify-content:center;padding:2rem}
+  .card{background:#111113;border:1px solid #2a2a30;border-radius:20px;padding:3rem 2.5rem;max-width:460px;width:100%;text-align:center}
+  .icon{font-size:3rem;margin-bottom:1.25rem}
+  h1{font-family:'Syne',sans-serif;font-size:1.8rem;font-weight:800;margin-bottom:0.75rem}
+  .sub{color:#8a8a94;font-size:0.95rem;line-height:1.6;margin-bottom:2rem}
+  .accent{color:#e8ff5a}
+  .pro-color{color:#a78bfa}
+  input{width:100%;background:#18181c;border:1px solid #2a2a30;border-radius:10px;padding:0.85rem 1rem;color:#f0f0f2;font-size:0.95rem;font-family:inherit;outline:none;transition:border-color .2s;margin-bottom:0.75rem}
+  input:focus{border-color:#a78bfa}
+  input::placeholder{color:#8a8a94}
+  button{width:100%;background:#a78bfa;color:#0a0a0b;border:none;border-radius:10px;padding:0.85rem;font-size:0.95rem;font-weight:700;font-family:inherit;cursor:pointer;transition:opacity .2s}
+  button:hover{opacity:.88}
+  button:disabled{opacity:.5;cursor:not-allowed}
+  .msg{margin-top:1rem;font-size:0.85rem;min-height:1.2rem}
+  .msg.error{color:#f87171}
+  .msg.success{color:#4ade80}
+  .back{margin-top:1.5rem;font-size:0.8rem;color:#8a8a94}
+  .back a{color:#8a8a94;text-decoration:underline}
+</style>
+</head>
+<body>
+<div class="card">
+  <div class="icon">🎉</div>
+  <h1>Payment successful!</h1>
+  <p class="sub">Enter your email to activate <span class="pro-color">Pro mode</span> on this device.</p>
+  <input type="email" id="email-input" placeholder="your@email.com" />
+  <button id="activate-btn" onclick="activate()">Activate Pro →</button>
+  <div class="msg" id="msg"></div>
+  <div class="back"><a href="/">← Back to TubeRank</a></div>
+</div>
+
+<script>
+async function activate() {
+  const email = document.getElementById('email-input').value.trim();
+  if (!email) return;
+
+  const btn = document.getElementById('activate-btn');
+  const msg = document.getElementById('msg');
+  btn.disabled = true;
+  btn.textContent = 'Checking…';
+  msg.textContent = '';
+  msg.className = 'msg';
+
+  try {
+    const res = await fetch('/verify-subscription', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({email})
+    });
+    const data = await res.json();
+
+    if (data.pro) {
+      localStorage.setItem('tuberank_pro', 'true');
+      localStorage.setItem('tuberank_email', email);
+      msg.textContent = '✓ Pro activated! Redirecting…';
+      msg.className = 'msg success';
+      setTimeout(() => window.location.href = '/', 1500);
+    } else {
+      msg.textContent = 'No active subscription found for this email.';
+      msg.className = 'msg error';
+      btn.disabled = false;
+      btn.textContent = 'Activate Pro →';
+    }
+  } catch(e) {
+    msg.textContent = 'Connection error. Please try again.';
+    msg.className = 'msg error';
+    btn.disabled = false;
+    btn.textContent = 'Activate Pro →';
+  }
+}
+
+document.getElementById('email-input').addEventListener('keydown', e => {
+  if (e.key === 'Enter') activate();
+});
+</script>
+</body>
+</html>

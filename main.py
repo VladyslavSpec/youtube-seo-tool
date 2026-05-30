@@ -1,9 +1,13 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, Request
 from fastapi.staticfiles import StaticFiles
 from fastapi.responses import FileResponse
 from pydantic import BaseModel
 import os
 import anthropic
+import stripe
+
+stripe.api_key = os.environ.get("STRIPE_SECRET_KEY")
+STRIPE_PRICE_ID = os.environ.get("STRIPE_PRICE_ID")
 
 app = FastAPI()
 
@@ -88,3 +92,34 @@ def generate_seo(request: SeoRequest):
         "language": request.language,
         **result,
     }
+
+
+@app.post("/create-checkout-session")
+async def create_checkout_session(req: Request):
+    base_url = str(req.base_url).rstrip("/")
+    session = stripe.checkout.Session.create(
+        payment_method_types=["card"],
+        line_items=[{"price": STRIPE_PRICE_ID, "quantity": 1}],
+        mode="subscription",
+        success_url=f"{base_url}/static/success.html?session_id={{CHECKOUT_SESSION_ID}}",
+        cancel_url=f"{base_url}/",
+    )
+    return {"url": session.url}
+
+
+class EmailRequest(BaseModel):
+    email: str
+
+
+@app.post("/verify-subscription")
+def verify_subscription(request: EmailRequest):
+    customers = stripe.Customer.list(email=request.email, limit=1)
+    if not customers.data:
+        return {"pro": False}
+    customer = customers.data[0]
+    subscriptions = stripe.Subscription.list(
+        customer=customer.id,
+        status="active",
+        limit=1,
+    )
+    return {"pro": len(subscriptions.data) > 0}

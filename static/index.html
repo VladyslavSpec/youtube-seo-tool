@@ -253,7 +253,7 @@
         <li><span class="feat-check yes" style="background:rgba(167,139,250,0.12);color:var(--pro)">✓</span>Export to CSV</li>
         <li><span class="feat-check yes" style="background:rgba(167,139,250,0.12);color:var(--pro)">✓</span>Priority support</li>
       </ul>
-      <button class="plan-btn pro-btn">Start Pro → $10/mo</button>
+      <button class="plan-btn pro-btn" onclick="startCheckout()">Start Pro → $10/mo</button>
       <div class="pro-label">★ Most popular plan</div>
     </div>
   </div>
@@ -293,7 +293,7 @@ async function generate() {
     const res = await fetch('/generate-seo', {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify({topic: topic, language: 'auto', emoji_mode: emojiMode, tier: 'free'})
+      body: JSON.stringify({topic: topic, language: 'auto', emoji_mode: emojiMode, tier: getTier()})
     });
     const data = await res.json();
 
@@ -346,5 +346,24 @@ function showTab(tab) {
   document.getElementById('page-pricing').style.display = tab === 'pricing' ? 'block' : 'none';
   document.getElementById('tab-generator').style.color = tab === 'generator' ? 'var(--text)' : 'var(--muted)';
   document.getElementById('tab-pricing').style.color = tab === 'pricing' ? 'var(--text)' : 'var(--muted)';
+}
+
+async function startCheckout() {
+  const res = await fetch('/create-checkout-session', {method: 'POST'});
+  const data = await res.json();
+  window.location.href = data.url;
+}
+
+// Check Pro status on load
+(function() {
+  if (localStorage.getItem('tuberank_pro') === 'true') {
+    emojiMode = 'full';
+    const hint = document.querySelector('.hint');
+    if (hint) hint.innerHTML = '⚡ <strong style="color:var(--pro)">Pro</strong> · Unlimited generations · Deep analysis active';
+  }
+})();
+
+function getTier() {
+  return localStorage.getItem('tuberank_pro') === 'true' ? 'pro' : 'free';
 }
 </script>

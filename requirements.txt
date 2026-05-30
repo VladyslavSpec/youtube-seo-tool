@@ -4,3 +4,4 @@ python-multipart
 aiofiles
 pydantic>=2.9.0
 anthropic
+stripe
