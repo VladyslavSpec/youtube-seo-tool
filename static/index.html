@@ -124,6 +124,11 @@
   @keyframes spin{to{transform:rotate(360deg)}}
   .output-section{transition:opacity .3s}
   .output-results{display:none}
+  .emoji-row{display:flex;align-items:center;gap:0.5rem;max-width:620px;margin:0.6rem auto 0;padding:0 4px}
+  .emoji-label{font-size:0.75rem;color:var(--muted);white-space:nowrap}
+  .emoji-opt{background:var(--surface);border:1px solid var(--border);border-radius:20px;padding:0.28rem 0.7rem;font-size:0.75rem;color:var(--muted);cursor:pointer;transition:all .15s;font-family:inherit}
+  .emoji-opt:hover{border-color:#3a3a46;color:var(--text)}
+  .emoji-opt.active{border-color:var(--accent);color:var(--accent);background:rgba(232,255,90,0.07)}
 </style>
 
 <nav>
@@ -147,10 +152,16 @@
     <input type="text" id="topic-input" placeholder="Enter your video topic… e.g. 'beginner guitar chords'" />
 <button class="gen-btn" onclick="generate()">Generate SEO →</button>
   </div>
+  <div class="emoji-row">
+    <span class="emoji-label">Emojis:</span>
+    <button class="emoji-opt" id="emoji-none" onclick="setEmoji('none')">✗ None</button>
+    <button class="emoji-opt" id="emoji-medium" onclick="setEmoji('medium')">🙂 Some</button>
+    <button class="emoji-opt active" id="emoji-full" onclick="setEmoji('full')">🔥 Full</button>
+  </div>
   <div class="generating" id="gen-status">
     <div class="spinner"></div>Generating your SEO package…
   </div>
-  <p class="hint">No sign-up needed · 3 free generations per day</p>
+  <p class="hint">No sign-up needed · 2 free generations per day</p>
 </section>
 
 <div class="stats">
@@ -219,7 +230,7 @@
       <div class="plan-period">forever</div>
       <div class="plan-divider"></div>
       <ul class="plan-features">
-        <li><span class="feat-check yes">✓</span>3 generations per day</li>
+        <li><span class="feat-check yes">✓</span>2 generations per day</li>
         <li><span class="feat-check yes">✓</span>Title, description & tags</li>
         <li><span class="feat-check no">✗</span><span style="color:var(--muted)">Bulk generation</span></li>
         <li><span class="feat-check no">✗</span><span style="color:var(--muted)">Export to CSV</span></li>
@@ -257,6 +268,14 @@
 </footer>
 
 <script>
+let emojiMode = 'full';
+function setEmoji(mode) {
+  emojiMode = mode;
+  ['none','medium','full'].forEach(m => {
+    document.getElementById('emoji-'+m).classList.toggle('active', m === mode);
+  });
+}
+
 async function generate() {
   const topic = document.getElementById('topic-input').value.trim();
   if (!topic) { document.getElementById('topic-input').focus(); return; }
@@ -271,7 +290,7 @@ async function generate() {
     const res = await fetch('/generate-seo', {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify({topic: topic, language: 'auto'})
+      body: JSON.stringify({topic: topic, language: 'auto', emoji_mode: emojiMode})
     });
     const data = await res.json();
 
