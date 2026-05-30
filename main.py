@@ -3,6 +3,7 @@ from fastapi.staticfiles import StaticFiles
 from fastapi.responses import FileResponse
 from pydantic import BaseModel
 import os
+import anthropic
 
 app = FastAPI()
 
@@ -19,39 +20,40 @@ class SeoRequest(BaseModel):
     language: str = "English"
 
 
-def generate_seo_mock(topic: str) -> dict:
-    """Симулирует ответ Claude API — заменим на реальный вызов позже."""
-    return {
-        "title": f"How to {topic.title()} in 2024 (Step-by-Step Guide)",
-        "description": (
-            f"Want to learn {topic}? In this video, I'll show you everything "
-            f"you need to know about {topic} — from basics to advanced tips. "
-            f"Whether you're a beginner or already have some experience, "
-            f"this guide will help you get results fast.\n\n"
-            f"⏱ Timestamps:\n"
-            f"0:00 — Introduction\n"
-            f"1:00 — What is {topic}?\n"
-            f"2:30 — Step-by-step breakdown\n"
-            f"4:00 — Common mistakes\n"
-            f"5:00 — Final tips\n\n"
-            f"##{topic.replace(' ', '')} #tutorial #guide"
-        ),
-        "tags": [
-            topic,
-            f"{topic} tutorial",
-            f"how to {topic}",
-            f"{topic} for beginners",
-            f"{topic} guide",
-            "tutorial",
-            "how to",
-            "step by step",
-        ],
-    }
+client = anthropic.Anthropic(api_key=os.environ.get("ANTHROPIC_API_KEY"))
+
+
+def generate_seo_claude(topic: str, language: str) -> dict:
+    prompt = f"""You are a YouTube SEO expert. Generate SEO-optimized metadata for a YouTube video.
+
+Topic: {topic}
+Language: {language}
+
+Return ONLY a JSON object with these exact keys:
+- title: catchy, clickable YouTube title (max 100 chars)
+- description: full YouTube description with emojis, timestamps, and hashtags (200-400 words)
+- tags: array of 15 relevant search tags
+
+JSON only, no extra text."""
+
+    message = client.messages.create(
+        model="claude-haiku-4-5-20251001",
+        max_tokens=1024,
+        messages=[{"role": "user", "content": prompt}],
+    )
+
+    import json
+    text = message.content[0].text.strip()
+    if text.startswith("```"):
+        text = text.split("```")[1]
+        if text.startswith("json"):
+            text = text[4:]
+    return json.loads(text.strip())
 
 
 @app.post("/generate-seo")
 def generate_seo(request: SeoRequest):
-    result = generate_seo_mock(request.topic)
+    result = generate_seo_claude(request.topic, request.language)
     return {
         "topic": request.topic,
         "language": request.language,
