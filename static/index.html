@@ -28,9 +28,11 @@
   nav{display:flex;justify-content:space-between;align-items:center;padding:1.25rem 2.5rem;border-bottom:1px solid var(--border);position:sticky;top:0;background:var(--nav-bg);backdrop-filter:blur(12px);z-index:99;transition:background .3s}
   .logo{font-family:'Syne',sans-serif;font-weight:800;font-size:1.15rem;letter-spacing:-0.02em;display:flex;align-items:center;gap:8px}
   .logo-dot{width:8px;height:8px;background:var(--accent);border-radius:50%;display:inline-block}
-  .nav-links{display:flex;gap:2rem;font-size:0.875rem;color:var(--muted)}
-  .nav-links a{color:var(--muted);text-decoration:none;transition:color .2s}
-  .nav-links a:hover{color:var(--text)}
+  .nav-links{display:flex;gap:1.25rem;font-size:0.875rem;color:var(--muted);align-items:center}
+  .nav-links a{color:var(--muted);text-decoration:none;transition:color .2s,transform .25s cubic-bezier(.34,1.56,.64,1);display:inline-block}
+  .nav-links a:hover{color:var(--text);transform:scale(1.12)}
+  .nav-links a#tab-generator{font-size:1rem;font-weight:700;color:var(--text);background:rgba(232,255,90,0.07);border:1px solid rgba(232,255,90,0.18);padding:0.35rem 1rem;border-radius:99px}
+  .nav-links a#tab-generator:hover{background:rgba(232,255,90,0.13);border-color:rgba(232,255,90,0.35);transform:scale(1.08)}
   .nav-cta{background:var(--accent);color:#0a0a0b;font-size:0.8rem;font-weight:600;padding:0.45rem 1.1rem;border-radius:6px;border:none;cursor:pointer;font-family:'DM Sans',sans-serif;transition:opacity .2s}
   .nav-cta:hover{opacity:.85}
 
@@ -147,9 +149,9 @@
 <nav>
   <div class="logo"><span class="logo-dot"></span>TubeRank</div>
   <div class="nav-links">
-    <a href="#" onclick="showTab('generator')" id="tab-generator">Generator</a>
     <a href="#" onclick="showTab('tools')" id="tab-tools">Tools</a>
-    <a href="#" onclick="showTab('pricing')" id="tab-pricing">Pricing</a>
+    <a href="#" onclick="showTab('generator')" id="tab-generator">Generator</a>
+    <a href="#" onclick="showTab('pricing')" id="tab-pricing">Price</a>
   </div>
   <div style="display:flex;align-items:center;gap:0.75rem">
     <button class="theme-toggle" onclick="toggleTheme()" id="theme-btn">☀️ <span class="theme-label">Light</span></button>
