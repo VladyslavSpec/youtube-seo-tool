@@ -15,7 +15,7 @@ if st.button("Generate SEO", type="primary"):
     else:
         with st.spinner("Generating..."):
             response = requests.post(
-                "http://127.0.0.1:8000/generate-seo",
+                "https://youtube-seo-tool-production-b56c.up.railway.app/generate-seo",
                 json={"topic": topic, "language": language},
             )
             data = response.json()
