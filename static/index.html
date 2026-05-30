@@ -231,10 +231,11 @@
       <div class="plan-divider"></div>
       <ul class="plan-features">
         <li><span class="feat-check yes">✓</span>2 generations per day</li>
+        <li><span class="feat-check yes">✓</span>Basic SEO analysis</li>
         <li><span class="feat-check yes">✓</span>Title, description & tags</li>
+        <li><span class="feat-check no">✗</span><span style="color:var(--muted)">Deep audience analysis</span></li>
         <li><span class="feat-check no">✗</span><span style="color:var(--muted)">Bulk generation</span></li>
         <li><span class="feat-check no">✗</span><span style="color:var(--muted)">Export to CSV</span></li>
-        <li><span class="feat-check no">✗</span><span style="color:var(--muted)">Priority support</span></li>
       </ul>
       <button class="plan-btn free-btn">Get started free</button>
     </div>
@@ -245,7 +246,8 @@
       <div class="plan-divider" style="background:rgba(167,139,250,0.2)"></div>
       <ul class="plan-features">
         <li><span class="feat-check yes">✓</span><strong style="color:var(--text)">Unlimited</strong> generations</li>
-        <li><span class="feat-check yes">✓</span>Title, description & tags</li>
+        <li><span class="feat-check yes" style="background:rgba(167,139,250,0.12);color:var(--pro)">✓</span><strong style="color:var(--text)">Deep audience analysis</strong></li>
+        <li><span class="feat-check yes" style="background:rgba(167,139,250,0.12);color:var(--pro)">✓</span><strong style="color:var(--text)">Max-impact copy & hooks</strong></li>
         <li><span class="feat-check yes" style="background:rgba(167,139,250,0.12);color:var(--pro)">✓</span>Bulk generation (10+ videos)</li>
         <li><span class="feat-check yes" style="background:rgba(167,139,250,0.12);color:var(--pro)">✓</span>Export to CSV</li>
         <li><span class="feat-check yes" style="background:rgba(167,139,250,0.12);color:var(--pro)">✓</span>Priority support</li>
@@ -290,7 +292,7 @@ async function generate() {
     const res = await fetch('/generate-seo', {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify({topic: topic, language: 'auto', emoji_mode: emojiMode})
+      body: JSON.stringify({topic: topic, language: 'auto', emoji_mode: emojiMode, tier: 'free'})
     });
     const data = await res.json();
 

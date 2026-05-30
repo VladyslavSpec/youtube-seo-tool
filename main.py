@@ -19,6 +19,7 @@ class SeoRequest(BaseModel):
     topic: str
     language: str = "English"
     emoji_mode: str = "full"
+    tier: str = "free"
 
 
 client = anthropic.Anthropic(api_key=os.environ.get("ANTHROPIC_API_KEY"))
@@ -30,12 +31,30 @@ EMOJI_INSTRUCTIONS = {
     "full": "Use emojis freely in the description to make it engaging and visually appealing.",
 }
 
+TIER_INSTRUCTIONS = {
+    "free": (
+        "Write standard, informative YouTube SEO metadata. "
+        "Keep the description clear and helpful. "
+        "Use basic keywords naturally."
+    ),
+    "pro": (
+        "Perform a deep audience analysis before writing. "
+        "Identify the target viewer's pain points, desires, fears, and motivations. "
+        "Write maximum-impact, highly persuasive copy that drives clicks and watch time. "
+        "Make the title irresistible using curiosity gaps or emotional triggers. "
+        "Open the description with a strong hook. "
+        "Use proven copywriting techniques: open loops, social proof, urgency."
+    ),
+}
 
-def generate_seo_claude(topic: str, language: str, emoji_mode: str = "full") -> dict:
+
+def generate_seo_claude(topic: str, language: str, emoji_mode: str = "full", tier: str = "free") -> dict:
     emoji_instr = EMOJI_INSTRUCTIONS.get(emoji_mode, EMOJI_INSTRUCTIONS["full"])
+    tier_instr = TIER_INSTRUCTIONS.get(tier, TIER_INSTRUCTIONS["free"])
     prompt = f"""Generate SEO-optimized metadata for a YouTube video about: {topic}
 
 Detect the language of the topic above and write everything in that same language.
+Analysis approach: {tier_instr}
 Emoji rule: {emoji_instr}
 
 Return ONLY a JSON object with these exact keys:
@@ -63,7 +82,7 @@ JSON only, no extra text."""
 
 @app.post("/generate-seo")
 def generate_seo(request: SeoRequest):
-    result = generate_seo_claude(request.topic, request.language, request.emoji_mode)
+    result = generate_seo_claude(request.topic, request.language, request.emoji_mode, request.tier)
     return {
         "topic": request.topic,
         "language": request.language,
