@@ -122,14 +122,7 @@
   <p class="subhead">Generate high-converting YouTube titles, descriptions, and tags in seconds. Stop guessing — start growing.</p>
   <div class="input-wrap">
     <input type="text" id="topic-input" placeholder="Enter your video topic… e.g. 'beginner guitar chords'" />
-    <select id="lang-select" style="background:transparent;border:none;outline:none;color:var(--muted);font-family:'DM Sans',sans-serif;font-size:0.85rem;cursor:pointer;padding:0 0.5rem">
-      <option value="English">EN</option>
-      <option value="Russian">RU</option>
-      <option value="Spanish">ES</option>
-      <option value="French">FR</option>
-      <option value="German">DE</option>
-    </select>
-    <button class="gen-btn" onclick="generate()">Generate SEO →</button>
+<button class="gen-btn" onclick="generate()">Generate SEO →</button>
   </div>
   <div class="generating" id="gen-status">
     <div class="spinner"></div>Generating your SEO package…
@@ -250,7 +243,7 @@ async function generate() {
     const res = await fetch('/generate-seo', {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify({topic: topic, language: document.getElementById('lang-select').value})
+      body: JSON.stringify({topic: topic, language: 'auto'})
     });
     const data = await res.json();
 

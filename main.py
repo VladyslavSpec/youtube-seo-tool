@@ -24,24 +24,21 @@ client = anthropic.Anthropic(api_key=os.environ.get("ANTHROPIC_API_KEY"))
 
 
 def generate_seo_claude(topic: str, language: str) -> dict:
-    prompt = f"""You are a YouTube SEO expert. Generate SEO-optimized metadata for a YouTube video.
+    prompt = f"""Generate SEO-optimized metadata for a YouTube video about: {topic}
 
-Topic: {topic}
-Output language: {language}
-
-IMPORTANT: Write ALL output (title, description, tags) in {language}. Do not use English if the language is not English.
+Detect the language of the topic above and write everything in that same language.
 
 Return ONLY a JSON object with these exact keys:
-- title: catchy, clickable YouTube title in {language} (max 100 chars)
-- description: full YouTube description in {language} with emojis, timestamps, and hashtags (200-400 words)
-- tags: array of 15 relevant search tags in {language}
+- title: catchy, clickable YouTube title (max 100 chars)
+- description: full YouTube description with emojis, timestamps, and hashtags (200-400 words)
+- tags: array of 15 relevant search tags
 
 JSON only, no extra text."""
 
     message = client.messages.create(
         model="claude-haiku-4-5-20251001",
         max_tokens=1024,
-        system=f"You are a YouTube SEO expert. You MUST write all responses in {language}. Never use English if {language} is not English.",
+        system="You are a YouTube SEO expert. Detect the language of the topic and write ALL output in that same language. If the topic is in Russian, write in Russian. If in English, write in English. Never mix languages.",
         messages=[{"role": "user", "content": prompt}],
     )
 
