@@ -5,11 +5,13 @@ from pydantic import BaseModel
 from collections import defaultdict
 from datetime import date
 import os
+import httpx
 import anthropic
 import stripe
 
 stripe.api_key = os.environ.get("STRIPE_SECRET_KEY")
 STRIPE_PRICE_ID = os.environ.get("STRIPE_PRICE_ID")
+YOUTUBE_API_KEY = os.environ.get("YOUTUBE_API_KEY")
 
 LIMITS = {"generator": 2, "tool": 3}
 request_counts: dict = defaultdict(lambda: defaultdict(int))
@@ -153,6 +155,47 @@ async def tool_generate(request: ToolRequest, req: Request):
         if text.startswith("json"):
             text = text[4:]
     return {"result": json_lib.loads(text.strip())}
+
+
+class ExtractRequest(BaseModel):
+    url: str
+    tier: str = "free"
+
+
+def extract_video_id(url: str) -> str:
+    import re
+    patterns = [
+        r"youtube\.com/watch\?v=([a-zA-Z0-9_-]{11})",
+        r"youtu\.be/([a-zA-Z0-9_-]{11})",
+        r"youtube\.com/shorts/([a-zA-Z0-9_-]{11})",
+    ]
+    for p in patterns:
+        m = re.search(p, url)
+        if m:
+            return m.group(1)
+    return ""
+
+
+@app.post("/extract-tags")
+async def extract_tags(request: ExtractRequest, req: Request):
+    ip = get_client_ip(req)
+    check_rate_limit(ip, request.tier, "tool")
+    video_id = extract_video_id(request.url)
+    if not video_id:
+        raise HTTPException(status_code=400, detail="Invalid YouTube URL")
+    async with httpx.AsyncClient() as client_http:
+        resp = await client_http.get(
+            "https://www.googleapis.com/youtube/v3/videos",
+            params={"part": "snippet", "id": video_id, "key": YOUTUBE_API_KEY},
+        )
+    data = resp.json()
+    items = data.get("items", [])
+    if not items:
+        raise HTTPException(status_code=404, detail="Video not found")
+    snippet = items[0]["snippet"]
+    tags = snippet.get("tags", [])
+    title = snippet.get("title", "")
+    return {"title": title, "tags": tags, "count": len(tags)}
 
 
 @app.post("/create-checkout-session")

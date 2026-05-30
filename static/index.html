@@ -310,6 +310,22 @@
       </div>
     </div>
 
+    <!-- Tag Extractor -->
+    <div class="output-card">
+      <div class="oc-header"><span class="oc-tag" style="background:rgba(251,191,36,0.12);color:#fbbf24">Tag Extractor</span><span style="font-size:0.72rem;color:var(--muted);margin-left:0.5rem">Reveals competitor tags</span></div>
+      <p style="color:var(--muted);font-size:0.85rem;margin:0.5rem 0 1rem">Paste any YouTube video URL and see all tags the creator is using.</p>
+      <div class="input-wrap" style="margin:0 0 0.75rem">
+        <input type="text" id="tool-extract-input" placeholder="https://youtube.com/watch?v=..." />
+        <button class="gen-btn" onclick="toolExtract()">Extract →</button>
+      </div>
+      <div id="tool-extract-title" style="font-size:0.8rem;color:var(--muted);margin-bottom:0.5rem"></div>
+      <div class="tags-row" id="tool-extract-output" style="min-height:1.5rem"></div>
+      <div id="tool-extract-copy" style="display:none;margin-top:0.75rem">
+        <button class="copy-btn" style="font-size:0.8rem;padding:0.3rem 0.75rem" onclick="copyRaw('tool-extract-raw')">Copy all tags</button>
+        <span id="tool-extract-raw" style="display:none"></span>
+      </div>
+    </div>
+
     <!-- Title Generator -->
     <div class="output-card">
       <div class="oc-header"><span class="oc-tag tag-title">Title Generator</span></div>
@@ -515,6 +531,41 @@ async function toolGenerate(type) {
 function copyRaw(id) {
   const text = document.getElementById(id).textContent;
   navigator.clipboard.writeText(text);
+}
+
+async function toolExtract() {
+  const url = document.getElementById('tool-extract-input').value.trim();
+  if (!url) return;
+  const btn = event.target;
+  btn.textContent = '…';
+  btn.disabled = true;
+  document.getElementById('tool-extract-output').innerHTML = '';
+  document.getElementById('tool-extract-title').textContent = '';
+  document.getElementById('tool-extract-copy').style.display = 'none';
+  try {
+    const res = await fetch('/extract-tags', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({url, tier: getTier()})
+    });
+    if (res.status === 429) { alert('Daily limit reached. Upgrade to Pro.'); return; }
+    if (res.status === 400) { alert('Invalid YouTube URL. Please check and try again.'); return; }
+    if (res.status === 404) { alert('Video not found or has no tags.'); return; }
+    const data = await res.json();
+    document.getElementById('tool-extract-title').textContent = `"${data.title}" · ${data.count} tags found`;
+    if (data.tags.length === 0) {
+      document.getElementById('tool-extract-output').innerHTML = '<span style="color:var(--muted);font-size:0.85rem">This video has no public tags.</span>';
+    } else {
+      document.getElementById('tool-extract-output').innerHTML = data.tags.map(t => `<span class="tag-pill" style="color:#fbbf24;border-color:rgba(251,191,36,0.2)">${t}</span>`).join('');
+      document.getElementById('tool-extract-raw').textContent = data.tags.join(', ');
+      document.getElementById('tool-extract-copy').style.display = 'block';
+    }
+  } catch(e) {
+    alert('Error. Please try again.');
+  } finally {
+    btn.textContent = 'Extract →';
+    btn.disabled = false;
+  }
 }
 
 async function startCheckout() {
