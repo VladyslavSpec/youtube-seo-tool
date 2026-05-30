@@ -1,12 +1,17 @@
 from fastapi import FastAPI
+from fastapi.staticfiles import StaticFiles
+from fastapi.responses import FileResponse
 from pydantic import BaseModel
+import os
 
 app = FastAPI()
+
+app.mount("/static", StaticFiles(directory="static"), name="static")
 
 
 @app.get("/")
 def root():
-    return {"message": "Hello! FastAPI is working!"}
+    return FileResponse("static/index.html")
 
 
 class SeoRequest(BaseModel):

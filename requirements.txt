@@ -1,5 +1,5 @@
 fastapi==0.136.3
 uvicorn==0.48.0
-streamlit
-requests
+python-multipart
+aiofiles
 pydantic>=2.9.0
