@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256">
+  <rect width="256" height="256" rx="56" fill="#111113"/>
+  <!-- T horizontal bar -->
+  <rect x="28" y="32" width="200" height="40" rx="20" fill="#e8ff5a"/>
+  <!-- T stem -->
+  <rect x="108" y="32" width="40" height="108" fill="#e8ff5a"/>
+  <!-- Ascending bars -->
+  <rect x="28"  y="200" width="48" height="32" rx="10" fill="#ffffff" opacity="0.3"/>
+  <rect x="104" y="174" width="48" height="58" rx="10" fill="#ffffff" opacity="0.6"/>
+  <rect x="180" y="148" width="48" height="84" rx="10" fill="#ffffff"/>
+</svg>
