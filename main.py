@@ -27,12 +27,14 @@ def generate_seo_claude(topic: str, language: str) -> dict:
     prompt = f"""You are a YouTube SEO expert. Generate SEO-optimized metadata for a YouTube video.
 
 Topic: {topic}
-Language: {language}
+Output language: {language}
+
+IMPORTANT: Write ALL output (title, description, tags) in {language}. Do not use English if the language is not English.
 
 Return ONLY a JSON object with these exact keys:
-- title: catchy, clickable YouTube title (max 100 chars)
-- description: full YouTube description with emojis, timestamps, and hashtags (200-400 words)
-- tags: array of 15 relevant search tags
+- title: catchy, clickable YouTube title in {language} (max 100 chars)
+- description: full YouTube description in {language} with emojis, timestamps, and hashtags (200-400 words)
+- tags: array of 15 relevant search tags in {language}
 
 JSON only, no extra text."""
 
