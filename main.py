@@ -41,6 +41,7 @@ JSON only, no extra text."""
     message = client.messages.create(
         model="claude-haiku-4-5-20251001",
         max_tokens=1024,
+        system=f"You are a YouTube SEO expert. You MUST write all responses in {language}. Never use English if {language} is not English.",
         messages=[{"role": "user", "content": prompt}],
     )
 
