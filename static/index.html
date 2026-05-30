@@ -1,4 +1,11 @@
-
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TubeRank — YouTube SEO Generator</title>
+</head>
+<body>
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:wght@300;400;500&display=swap');
   *{box-sizing:border-box;margin:0;padding:0}
@@ -121,8 +128,8 @@
 <nav>
   <div class="logo"><span class="logo-dot"></span>TubeRank</div>
   <div class="nav-links">
-    <a href="#">Features</a>
-    <a href="#pricing">Pricing</a>
+    <a href="#" onclick="showTab('generator')" id="tab-generator">Generator</a>
+    <a href="#" onclick="showTab('pricing')" id="tab-pricing">Pricing</a>
   </div>
   <div style="display:flex;align-items:center;gap:0.75rem">
     <button class="theme-toggle" onclick="toggleTheme()" id="theme-btn">☀️ Light</button>
@@ -130,6 +137,7 @@
   </div>
 </nav>
 
+<div id="page-generator">
 <section class="hero">
   <div class="badge"><span class="badge-dot"></span>Powered by AI · 2 min setup</div>
   <h1>Rank your videos<br><span class="line2">on autopilot.</span></h1>
@@ -196,6 +204,9 @@
   </div>
 </div>
 
+</div>
+
+<div id="page-pricing" style="display:none">
 <section class="pricing" id="pricing">
   <div class="pricing-label">Pricing</div>
   <h2 class="pricing-head">Simple, honest pricing</h2>
@@ -232,6 +243,8 @@
     </div>
   </div>
 </section>
+
+</div>
 
 <footer>
   <div style="color:var(--muted)">© 2026 TubeRank · Made for creators</div>
@@ -302,5 +315,12 @@ function toggleTheme() {
 if (localStorage.getItem('theme') === 'light') {
   document.documentElement.classList.add('light');
   document.getElementById('theme-btn').textContent = '🌙 Dark';
+}
+
+function showTab(tab) {
+  document.getElementById('page-generator').style.display = tab === 'generator' ? 'block' : 'none';
+  document.getElementById('page-pricing').style.display = tab === 'pricing' ? 'block' : 'none';
+  document.getElementById('tab-generator').style.color = tab === 'generator' ? 'var(--text)' : 'var(--muted)';
+  document.getElementById('tab-pricing').style.color = tab === 'pricing' ? 'var(--text)' : 'var(--muted)';
 }
 </script>
