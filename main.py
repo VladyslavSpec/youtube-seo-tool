@@ -11,7 +11,7 @@ import stripe
 stripe.api_key = os.environ.get("STRIPE_SECRET_KEY")
 STRIPE_PRICE_ID = os.environ.get("STRIPE_PRICE_ID")
 
-FREE_DAILY_LIMIT = 2
+LIMITS = {"generator": 2, "tool": 3}
 request_counts: dict = defaultdict(lambda: defaultdict(int))
 
 
@@ -22,15 +22,17 @@ def get_client_ip(req: Request) -> str:
     return req.client.host
 
 
-def check_rate_limit(ip: str, tier: str):
+def check_rate_limit(ip: str, tier: str, kind: str = "generator"):
     if tier == "pro":
         return
     today = str(date.today())
-    request_counts[ip][today] += 1
-    if request_counts[ip][today] > FREE_DAILY_LIMIT:
+    key = f"{ip}:{kind}:{today}"
+    request_counts[key]["count"] += 1
+    limit = LIMITS.get(kind, 2)
+    if request_counts[key]["count"] > limit:
         raise HTTPException(
             status_code=429,
-            detail=f"Free limit of {FREE_DAILY_LIMIT} generations per day reached. Upgrade to Pro for unlimited access."
+            detail=f"Free limit of {limit} generations per day reached for this tool. Upgrade to Pro for unlimited access."
         )
 
 app = FastAPI()
@@ -112,7 +114,7 @@ JSON only, no extra text."""
 @app.post("/generate-seo")
 async def generate_seo(request: SeoRequest, req: Request):
     ip = get_client_ip(req)
-    check_rate_limit(ip, request.tier)
+    check_rate_limit(ip, request.tier, "generator")
     result = generate_seo_claude(request.topic, request.language, request.emoji_mode, request.tier)
     return {
         "topic": request.topic,
@@ -138,7 +140,7 @@ TOOL_PROMPTS = {
 async def tool_generate(request: ToolRequest, req: Request):
     import json as json_lib
     ip = get_client_ip(req)
-    check_rate_limit(ip, request.tier)
+    check_rate_limit(ip, request.tier, "tool")
     prompt = TOOL_PROMPTS.get(request.type, "").format(topic=request.topic)
     message = client.messages.create(
         model="claude-haiku-4-5-20251001",
