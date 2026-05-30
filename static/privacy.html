@@ -14,179 +14,69 @@
   .back:hover{color:#f0f0f2}
   h1{font-family:'Syne',sans-serif;font-size:2rem;font-weight:800;margin-bottom:0.5rem}
   .date{color:#8a8a94;font-size:0.85rem;margin-bottom:2.5rem}
-  h2{font-family:'Syne',sans-serif;font-size:1.1rem;font-weight:700;margin:2.25rem 0 0.75rem;color:#e8ff5a;display:flex;align-items:center;gap:0.6rem}
-  h2 .si{font-size:1.35rem;display:inline-flex;align-items:center;justify-content:center;width:2.2rem;height:2.2rem;background:#18181c;border:1px solid #2a2a30;border-radius:10px;flex-shrink:0;transition:transform .3s cubic-bezier(.34,1.56,.64,1)}
-  h2:hover .si{transform:scale(1.2) rotate(-8deg)}
+  h2{font-family:'Syne',sans-serif;font-size:1.15rem;font-weight:700;margin:2rem 0 0.75rem;color:#e8ff5a}
   p{color:#b0b0bc;margin-bottom:1rem;font-size:0.95rem}
   ul{color:#b0b0bc;padding-left:1.5rem;margin-bottom:1rem;font-size:0.95rem}
   ul li{margin-bottom:0.4rem}
   a{color:#e8ff5a;text-decoration:none}
   a:hover{text-decoration:underline}
   .divider{height:1px;background:#2a2a30;margin:2rem 0}
-  .toc{background:#111113;border:1px solid #2a2a30;border-radius:12px;padding:1.25rem 1.5rem;margin-bottom:2.5rem}
-  .toc-title{font-family:'Syne',sans-serif;font-size:0.8rem;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;color:#8a8a94;margin-bottom:0.75rem}
-  .toc ol{padding-left:1.25rem;color:#8a8a94;font-size:0.85rem}
-  .toc ol li{margin-bottom:0.3rem}
-  .toc ol li a{color:#8a8a94}
-  .toc ol li a:hover{color:#f0f0f2;text-decoration:none}
-  .highlight{background:rgba(232,255,90,0.06);border-left:3px solid #e8ff5a;padding:0.75rem 1rem;border-radius:0 8px 8px 0;margin:1rem 0;font-size:0.9rem;color:#d0d0d8}
-  .data-table{width:100%;border-collapse:collapse;margin:1rem 0;font-size:0.88rem}
-  .data-table th{text-align:left;padding:0.6rem 0.85rem;background:#18181c;color:#8a8a94;font-weight:500;border:1px solid #2a2a30}
-  .data-table td{padding:0.6rem 0.85rem;border:1px solid #2a2a30;color:#b0b0bc;vertical-align:top}
-  .data-table tr:nth-child(even) td{background:#111113}
 </style>
 </head>
 <body>
 <div class="wrap">
   <a href="/" class="back">← Back to TubeRank</a>
   <h1>Privacy Policy</h1>
-  <div class="date">Last updated: May 31, 2026 · Effective immediately</div>
+  <div class="date">Last updated: May 31, 2026</div>
 
-  <p>TubeRank ("we", "us", or "our") is operated by Vladyslav Deriabin, a sole trader based in the Czech Republic. This Privacy Policy explains what personal data we collect, why we collect it, how we use it, and your rights regarding your data when you use our Service at TubeRank.</p>
-  <p>We are committed to processing your personal data in compliance with the EU General Data Protection Regulation (GDPR) and applicable national data protection laws.</p>
+  <p>TubeRank ("we", "us", or "our") is operated by Vladyslav Deriabin, based in the Czech Republic. This Privacy Policy explains how we collect, use, and protect your information when you use our Service.</p>
 
-  <div class="toc">
-    <div class="toc-title">Table of Contents</div>
-    <ol>
-      <li><a href="#s1">Data Controller</a></li>
-      <li><a href="#s2">What Data We Collect</a></li>
-      <li><a href="#s3">Legal Basis for Processing</a></li>
-      <li><a href="#s4">How We Use Your Data</a></li>
-      <li><a href="#s5">Data Sharing and Third Parties</a></li>
-      <li><a href="#s6">International Data Transfers</a></li>
-      <li><a href="#s7">Data Retention</a></li>
-      <li><a href="#s8">Cookies and Local Storage</a></li>
-      <li><a href="#s9">Security</a></li>
-      <li><a href="#s10">Children's Privacy</a></li>
-      <li><a href="#s11">Your Rights (GDPR)</a></li>
-      <li><a href="#s12">Changes to This Policy</a></li>
-      <li><a href="#s13">Contact and Complaints</a></li>
-    </ol>
-  </div>
-
-  <h2 id="s1"><span class="si">👤</span>1. Data Controller</h2>
-  <p>The data controller responsible for your personal data is:</p>
+  <h2>1. Information We Collect</h2>
   <ul>
-    <li><strong>Name:</strong> Vladyslav Deriabin</li>
-    <li><strong>Country:</strong> Czech Republic</li>
-    <li><strong>Email:</strong> <a href="mailto:tuberank.support@gmail.com">tuberank.support@gmail.com</a></li>
+    <li><strong>Email address</strong> — provided voluntarily when activating a Pro subscription</li>
+    <li><strong>IP address</strong> — collected automatically to enforce free-tier daily usage limits</li>
+    <li><strong>Payment information</strong> — processed securely by Stripe; we never store card details</li>
+    <li><strong>Topic inputs / YouTube URLs</strong> — text you enter to generate content or extract tags; not stored after processing</li>
   </ul>
 
-  <h2 id="s2"><span class="si">📊</span>2. What Data We Collect</h2>
-  <p>We collect only the minimum data necessary to provide the Service:</p>
-  <table class="data-table">
-    <thead>
-      <tr><th>Data</th><th>How collected</th><th>Purpose</th></tr>
-    </thead>
-    <tbody>
-      <tr><td><strong>Email address</strong></td><td>Provided during Stripe checkout</td><td>Verify Pro subscription status</td></tr>
-      <tr><td><strong>IP address</strong></td><td>Automatically from your connection</td><td>Enforce free-tier daily usage limits</td></tr>
-      <tr><td><strong>Payment information</strong></td><td>Via Stripe (we never see card details)</td><td>Process Pro subscription payments</td></tr>
-      <tr><td><strong>Topic inputs</strong></td><td>Entered voluntarily in the app</td><td>Generate AI SEO content; forwarded to Anthropic API</td></tr>
-      <tr><td><strong>YouTube URLs</strong></td><td>Entered in Tag Extractor tool</td><td>Retrieve public video metadata via YouTube Data API</td></tr>
-    </tbody>
-  </table>
-  <p>We do not collect your name, phone number, location, device identifiers, or any other personal data beyond what is listed above.</p>
-
-  <h2 id="s3"><span class="si">⚖️</span>3. Legal Basis for Processing (GDPR)</h2>
-  <p>We process your personal data under the following legal bases as defined in GDPR Article 6:</p>
+  <h2>2. How We Use Your Information</h2>
   <ul>
-    <li><strong>Contract performance (Art. 6(1)(b)):</strong> Processing your email and payment data to fulfil your Pro subscription</li>
-    <li><strong>Legitimate interests (Art. 6(1)(f)):</strong> Processing IP addresses to prevent abuse of the free tier and protect the Service from misuse</li>
-    <li><strong>Legal obligation (Art. 6(1)(c)):</strong> Retaining payment records as required by applicable accounting and tax laws</li>
+    <li>To verify your Pro subscription status via email</li>
+    <li>To enforce the free plan daily limit via IP address (resets at midnight, not stored permanently)</li>
+    <li>To process payments through Stripe</li>
+    <li>To generate AI content via Anthropic's Claude API</li>
+    <li>To retrieve public video metadata via YouTube Data API v3 (Tag Extractor tool)</li>
   </ul>
 
-  <h2 id="s4"><span class="si">🔍</span>4. How We Use Your Data</h2>
+  <h2>3. Data Sharing</h2>
+  <p>We do not sell or rent your personal data. We share data only with:</p>
   <ul>
-    <li><strong>Email:</strong> To verify your active Pro subscription when you enter it in the app. We do not send marketing emails.</li>
-    <li><strong>IP address:</strong> To count and enforce the free-tier daily generation limit. The counter resets at midnight UTC and is not stored permanently.</li>
-    <li><strong>Payment data:</strong> Processed entirely by Stripe. We receive only a customer ID and subscription status — never raw card details.</li>
-    <li><strong>Topic inputs:</strong> Forwarded to the Anthropic Claude API to generate content. Not stored on our servers after processing.</li>
-    <li><strong>YouTube URLs:</strong> Forwarded to the YouTube Data API v3 to retrieve public video tags. Not stored after processing.</li>
-  </ul>
-  <div class="highlight">We do not sell, rent, or trade your personal data to any third party for marketing or advertising purposes.</div>
-
-  <h2 id="s5"><span class="si">🤝</span>5. Data Sharing and Third Parties</h2>
-  <p>We share data with the following third-party service providers only to the extent necessary to operate the Service:</p>
-  <ul>
-    <li>
-      <strong>Anthropic, PBC</strong> (United States) — AI content generation<br>
-      Your topic inputs are sent to Anthropic's Claude API. Anthropic may process this data under their own privacy policy: <a href="https://www.anthropic.com/privacy" target="_blank">anthropic.com/privacy</a>
-    </li>
-    <li>
-      <strong>Stripe, Inc.</strong> (United States) — Payment processing<br>
-      Your email and payment card details are processed by Stripe. Stripe is PCI-DSS certified. Privacy policy: <a href="https://stripe.com/privacy" target="_blank">stripe.com/privacy</a>
-    </li>
-    <li>
-      <strong>Google LLC</strong> (United States) — YouTube Data API v3<br>
-      YouTube video URLs submitted to the Tag Extractor are sent to Google's API. Privacy policy: <a href="https://policies.google.com/privacy" target="_blank">policies.google.com/privacy</a>
-    </li>
-    <li>
-      <strong>Railway Corp.</strong> (United States) — Cloud hosting<br>
-      Our application and server logs are hosted on Railway's infrastructure. Privacy policy: <a href="https://railway.app/legal/privacy" target="_blank">railway.app/legal/privacy</a>
-    </li>
-  </ul>
-  <p>All third-party providers are contractually required to protect your data and may only use it for the specific purposes we define.</p>
-
-  <h2 id="s6"><span class="si">🌍</span>6. International Data Transfers</h2>
-  <p>Our service providers (Anthropic, Stripe, Google, Railway) are based in the United States. When your data is transferred to the US, it is protected by appropriate safeguards, including Standard Contractual Clauses (SCCs) approved by the European Commission, and/or the providers' participation in equivalent frameworks.</p>
-
-  <h2 id="s7"><span class="si">🗓️</span>7. Data Retention</h2>
-  <ul>
-    <li><strong>Email addresses:</strong> Retained in Stripe for as long as your subscription is active, plus any period required by tax or accounting law (typically 5–7 years)</li>
-    <li><strong>IP addresses:</strong> Used in-memory for daily rate limiting only. Not written to disk or retained beyond the server process lifecycle</li>
-    <li><strong>Topic inputs / YouTube URLs:</strong> Not retained. Processed in real time and discarded</li>
-    <li><strong>Payment records:</strong> Retained by Stripe in accordance with their data retention policies and applicable legal requirements</li>
+    <li><strong>Stripe</strong> — payment processing (<a href="https://stripe.com/privacy" target="_blank">Stripe Privacy Policy</a>)</li>
+    <li><strong>Anthropic</strong> — AI content generation (<a href="https://www.anthropic.com/privacy" target="_blank">Anthropic Privacy Policy</a>)</li>
+    <li><strong>Google</strong> — YouTube Data API for Tag Extractor (<a href="https://policies.google.com/privacy" target="_blank">Google Privacy Policy</a>)</li>
+    <li><strong>Railway</strong> — cloud hosting provider</li>
   </ul>
 
-  <h2 id="s8"><span class="si">🍪</span>8. Cookies and Local Storage</h2>
-  <p>TubeRank does <strong>not</strong> use tracking cookies, advertising cookies, or any third-party analytics scripts (such as Google Analytics).</p>
-  <p>We use browser <strong>localStorage</strong> (not cookies) for the following purposes:</p>
-  <ul>
-    <li><strong>Theme preference:</strong> Remembers whether you prefer dark or light mode</li>
-    <li><strong>Pro status:</strong> Stores a local flag (<code>tuberank_pro = 'true'</code>) after you verify your Pro subscription via email, so you don't need to re-verify on every visit</li>
-  </ul>
-  <p>This data is stored entirely on your device and is never transmitted to our servers. You can clear it at any time by clearing your browser's local storage.</p>
+  <h2>4. Data Retention</h2>
+  <p>Email addresses linked to active subscriptions are retained for as long as the subscription is active and as required by applicable accounting law. IP-based usage data resets daily and is not stored permanently. Topic inputs are not retained after processing.</p>
 
-  <h2 id="s9"><span class="si">🔒</span>9. Security</h2>
-  <p>We implement appropriate technical and organisational measures to protect your data:</p>
-  <ul>
-    <li>All data in transit is encrypted using HTTPS/TLS</li>
-    <li>Payment data is handled exclusively by Stripe and never passes through our servers</li>
-    <li>All API keys and secrets are stored as environment variables on Railway — never hardcoded in source code</li>
-    <li>We do not maintain a database of user accounts or passwords</li>
-  </ul>
-  <p>No system is completely secure. If you suspect a security issue with our Service, please report it to <a href="mailto:tuberank.support@gmail.com">tuberank.support@gmail.com</a>.</p>
+  <h2>5. Your Rights (GDPR)</h2>
+  <p>If you are located in the EU/EEA, you have the right to access, correct, delete, or export your personal data, and to object to or restrict its processing. To exercise these rights, contact us at <a href="mailto:tuberank.support@gmail.com">tuberank.support@gmail.com</a>. You may also lodge a complaint with your local data protection authority (Czech Republic: <a href="https://www.uoou.cz" target="_blank">ÚOOÚ</a>).</p>
 
-  <h2 id="s10"><span class="si">👶</span>10. Children's Privacy</h2>
-  <p>TubeRank is not directed to children under the age of 13. We do not knowingly collect personal data from children under 13. If you believe a child has provided us with personal data, please contact us and we will delete it promptly.</p>
+  <h2>6. Cookies and Local Storage</h2>
+  <p>TubeRank does not use tracking cookies or third-party analytics. We use browser localStorage only to remember your theme preference and Pro activation status. This data stays on your device and is never sent to our servers.</p>
 
-  <h2 id="s11"><span class="si">✊</span>11. Your Rights (GDPR)</h2>
-  <p>If you are located in the European Economic Area (EEA), United Kingdom, or Switzerland, you have the following rights regarding your personal data:</p>
-  <ul>
-    <li><strong>Right of access (Art. 15):</strong> Request a copy of the personal data we hold about you</li>
-    <li><strong>Right to rectification (Art. 16):</strong> Request correction of inaccurate or incomplete data</li>
-    <li><strong>Right to erasure (Art. 17):</strong> Request deletion of your personal data ("right to be forgotten"), subject to legal retention requirements</li>
-    <li><strong>Right to restriction (Art. 18):</strong> Request that we restrict processing of your data under certain conditions</li>
-    <li><strong>Right to data portability (Art. 20):</strong> Receive your data in a structured, machine-readable format</li>
-    <li><strong>Right to object (Art. 21):</strong> Object to processing based on legitimate interests</li>
-    <li><strong>Right to withdraw consent:</strong> Where processing is based on consent, withdraw it at any time without affecting prior processing</li>
-  </ul>
-  <p>To exercise any of these rights, contact us at <a href="mailto:tuberank.support@gmail.com">tuberank.support@gmail.com</a>. We will respond within 30 days. We may need to verify your identity before processing your request.</p>
-  <p>You also have the right to lodge a complaint with your local data protection authority. In the Czech Republic, this is the <a href="https://www.uoou.cz" target="_blank">Office for Personal Data Protection (ÚOOÚ)</a>.</p>
+  <h2>7. Security</h2>
+  <p>All data in transit is encrypted via HTTPS. Payment data is handled entirely by Stripe and never passes through our servers. All API keys are stored as environment variables — never in source code.</p>
 
-  <h2 id="s12"><span class="si">📝</span>12. Changes to This Policy</h2>
-  <p>We may update this Privacy Policy from time to time to reflect changes in our practices or applicable law. Material changes will be communicated to Pro subscribers by email at least 14 days before they take effect. The updated policy will always be accessible on this page with a revised "Last updated" date.</p>
+  <h2>8. Changes to This Policy</h2>
+  <p>We may update this Privacy Policy from time to time. Changes will be posted on this page with an updated date. Pro subscribers will be notified by email for material changes.</p>
 
-  <h2 id="s13"><span class="si">📧</span>13. Contact and Complaints</h2>
-  <p>For any privacy-related questions, requests, or concerns, please contact us:</p>
-  <ul>
-    <li>Email: <a href="mailto:tuberank.support@gmail.com">tuberank.support@gmail.com</a></li>
-    <li>We aim to respond to all requests within 5 business days</li>
-  </ul>
+  <h2>9. Contact</h2>
+  <p>For any privacy-related questions, contact us at <a href="mailto:tuberank.support@gmail.com">tuberank.support@gmail.com</a>.</p>
 
   <div class="divider"></div>
-  <p style="font-size:0.8rem;color:#8a8a94">© 2026 TubeRank · <a href="/static/terms.html">Terms of Service</a> · <a href="/">Back to app</a></p>
+  <p style="font-size:0.8rem;color:#8a8a94">© 2026 TubeRank · <a href="/static/terms.html">Terms of Service</a></p>
 </div>
 </body>
 </html>
