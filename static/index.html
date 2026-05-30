@@ -214,6 +214,10 @@
       <div class="oc-header"><span class="oc-tag tag-tags">Tags</span><button class="copy-btn" onclick="copyText(this,'tags-text')">Copy all</button></div>
       <div class="tags-row" id="tags-text"></div>
     </div>
+    <div class="output-card">
+      <div class="oc-header"><span class="oc-tag" style="background:rgba(99,179,237,0.12);color:#63b3ed">Hashtags</span><button class="copy-btn" onclick="copyText(this,'hashtags-text')">Copy all</button></div>
+      <div class="tags-row" id="hashtags-text"></div>
+    </div>
   </div>
 </div>
 
@@ -314,6 +318,8 @@ async function generate() {
     document.getElementById('desc-text').textContent = data.description;
     document.getElementById('tags-text').innerHTML = data.tags
       .map(t => `<span class="tag-pill">${t}</span>`).join('');
+    document.getElementById('hashtags-text').innerHTML = (data.hashtags || [])
+      .map(h => `<span class="tag-pill" style="color:#63b3ed;border-color:rgba(99,179,237,0.2)">${h}</span>`).join('');
 
     document.getElementById('example-output').style.display = 'none';
     document.getElementById('real-output').style.display = 'block';

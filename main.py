@@ -87,8 +87,9 @@ Emoji rule: {emoji_instr}
 
 Return ONLY a JSON object with these exact keys:
 - title: catchy, clickable YouTube title (max 100 chars)
-- description: full YouTube description with timestamps and hashtags (200-400 words)
-- tags: array of 15 relevant search tags
+- description: full YouTube description with timestamps (200-400 words, no hashtags in description)
+- tags: array of 15 relevant search tags (without # symbol)
+- hashtags: array of 10 YouTube hashtags (with # symbol, short and searchable, e.g. #YouTubeSEO)
 
 JSON only, no extra text."""
 
