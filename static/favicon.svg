@@ -1,4 +1,11 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
-  <rect width="64" height="64" rx="14" fill="#0a0a0b"/>
-  <text x="32" y="46" font-family="Arial Black, sans-serif" font-size="36" font-weight="900" fill="#e8ff5a" text-anchor="middle">T</text>
+  <rect width="64" height="64" rx="14" fill="#111113"/>
+  <!-- T bar -->
+  <rect x="7" y="8" width="50" height="10" rx="5" fill="#e8ff5a"/>
+  <!-- T stem -->
+  <rect x="27" y="8" width="10" height="27" fill="#e8ff5a"/>
+  <!-- Ascending bars (rank going up) -->
+  <rect x="8"  y="50" width="12" height="8"  rx="3" fill="#e8ff5a" opacity="0.35"/>
+  <rect x="26" y="44" width="12" height="14" rx="3" fill="#e8ff5a" opacity="0.65"/>
+  <rect x="44" y="38" width="12" height="20" rx="3" fill="#e8ff5a"/>
 </svg>
