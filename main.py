@@ -1,13 +1,37 @@
-from fastapi import FastAPI, Request
+from fastapi import FastAPI, Request, HTTPException
 from fastapi.staticfiles import StaticFiles
 from fastapi.responses import FileResponse
 from pydantic import BaseModel
+from collections import defaultdict
+from datetime import date
 import os
 import anthropic
 import stripe
 
 stripe.api_key = os.environ.get("STRIPE_SECRET_KEY")
 STRIPE_PRICE_ID = os.environ.get("STRIPE_PRICE_ID")
+
+FREE_DAILY_LIMIT = 2
+request_counts: dict = defaultdict(lambda: defaultdict(int))
+
+
+def get_client_ip(req: Request) -> str:
+    forwarded = req.headers.get("X-Forwarded-For")
+    if forwarded:
+        return forwarded.split(",")[0].strip()
+    return req.client.host
+
+
+def check_rate_limit(ip: str, tier: str):
+    if tier == "pro":
+        return
+    today = str(date.today())
+    request_counts[ip][today] += 1
+    if request_counts[ip][today] > FREE_DAILY_LIMIT:
+        raise HTTPException(
+            status_code=429,
+            detail=f"Free limit of {FREE_DAILY_LIMIT} generations per day reached. Upgrade to Pro for unlimited access."
+        )
 
 app = FastAPI()
 
@@ -85,7 +109,9 @@ JSON only, no extra text."""
 
 
 @app.post("/generate-seo")
-def generate_seo(request: SeoRequest):
+async def generate_seo(request: SeoRequest, req: Request):
+    ip = get_client_ip(req)
+    check_rate_limit(ip, request.tier)
     result = generate_seo_claude(request.topic, request.language, request.emoji_mode, request.tier)
     return {
         "topic": request.topic,

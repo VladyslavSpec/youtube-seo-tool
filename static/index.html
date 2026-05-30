@@ -295,6 +295,19 @@ async function generate() {
       headers: {'Content-Type': 'application/json'},
       body: JSON.stringify({topic: topic, language: 'auto', emoji_mode: emojiMode, tier: getTier()})
     });
+
+    if (res.status === 429) {
+      document.getElementById('output-section').innerHTML = `
+        <div style="text-align:center;padding:2.5rem 1rem;background:var(--surface);border:1px solid var(--border);border-radius:16px;max-width:480px;margin:0 auto">
+          <div style="font-size:2rem;margin-bottom:1rem">⚡</div>
+          <div style="font-family:'Syne',sans-serif;font-size:1.2rem;font-weight:700;margin-bottom:0.5rem">Daily limit reached</div>
+          <div style="color:var(--muted);font-size:0.9rem;margin-bottom:1.5rem">You've used your 2 free generations today.<br>Upgrade to Pro for unlimited access.</div>
+          <button onclick="startCheckout()" style="background:var(--pro);color:#0a0a0b;border:none;border-radius:10px;padding:0.75rem 1.5rem;font-size:0.9rem;font-weight:700;cursor:pointer;font-family:inherit">Upgrade to Pro → $10/mo</button>
+        </div>`;
+      document.getElementById('output-section').scrollIntoView({behavior: 'smooth'});
+      return;
+    }
+
     const data = await res.json();
 
     document.getElementById('title-text').textContent = data.title;
