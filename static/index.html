@@ -119,6 +119,9 @@
   .plan-btn.pro-btn{background:var(--pro);color:#fff}
   .plan-btn.pro-btn:hover{opacity:.88}
   .pro-label{font-size:0.75rem;color:var(--pro);text-align:center;margin-top:0.6rem}
+  .plan-price-row{display:flex;align-items:baseline;gap:0.6rem;flex-wrap:wrap}
+  .plan-price-old{font-size:1.3rem;font-weight:600;color:var(--muted);text-decoration:line-through;opacity:0.6}
+  .save-badge{display:inline-block;background:rgba(74,222,128,0.15);color:#4ade80;border:1px solid rgba(74,222,128,0.3);font-size:0.65rem;font-weight:700;letter-spacing:0.06em;padding:0.2rem 0.5rem;border-radius:99px;margin-left:0.25rem;vertical-align:middle}
 
   .features{max-width:720px;margin:3rem auto 0;padding:0 2.5rem}
   .features-label{font-size:0.72rem;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:var(--muted);margin-bottom:0.75rem}
@@ -377,7 +380,11 @@
     </div>
     <div class="plan pro">
       <span class="plan-badge pro-b">Pro</span>
-      <div class="plan-price" style="color:var(--pro)">$10</div>
+      <div class="plan-price-row">
+        <div class="plan-price" style="color:var(--pro)">$9.99</div>
+        <div class="plan-price-old">$19.99</div>
+        <span class="save-badge">SAVE 50%</span>
+      </div>
       <div class="plan-period" id="txt-pro-period">per month · cancel anytime</div>
       <div class="plan-divider" style="background:rgba(167,139,250,0.2)"></div>
       <ul class="plan-features">
@@ -443,7 +450,7 @@ const LANGS = {
     proF2:'<strong style="color:var(--text)">Deep audience analysis</strong>',
     proF3:'<strong style="color:var(--text)">Max-impact copy & hooks</strong>',
     proF4:'Bulk generation (10+ videos)', proF5:'Export to CSV', proF6:'Priority support',
-    freeBtn:'Get started free', proBtn:'Start Pro → $10/mo', proPopular:'★ Most popular plan',
+    freeBtn:'Get started free', proBtn:'Start Pro → $9.99/mo', proPopular:'★ Most popular plan',
     footer:'© 2026 TubeRank · Made for creators',
     privacy:'Privacy', terms:'Terms', contact:'Contact',
   },
@@ -483,7 +490,7 @@ const LANGS = {
     proF2:'<strong style="color:var(--text)">Análisis profundo de audiencia</strong>',
     proF3:'<strong style="color:var(--text)">Textos de máximo impacto</strong>',
     proF4:'Generación masiva (10+ videos)', proF5:'Exportar a CSV', proF6:'Soporte prioritario',
-    freeBtn:'Empezar gratis', proBtn:'Iniciar Pro → $10/mes', proPopular:'★ Plan más popular',
+    freeBtn:'Empezar gratis', proBtn:'Iniciar Pro → $9.99/mes', proPopular:'★ Plan más popular',
     footer:'© 2026 TubeRank · Hecho para creadores',
     privacy:'Privacidad', terms:'Términos', contact:'Contacto',
   },
@@ -523,7 +530,7 @@ const LANGS = {
     proF2:'<strong style="color:var(--text)">Глубокий анализ аудитории</strong>',
     proF3:'<strong style="color:var(--text)">Тексты максимального воздействия</strong>',
     proF4:'Массовая генерация (10+ видео)', proF5:'Экспорт в CSV', proF6:'Приоритетная поддержка',
-    freeBtn:'Начать бесплатно', proBtn:'Перейти на Pro → $10/мес', proPopular:'★ Самый популярный план',
+    freeBtn:'Начать бесплатно', proBtn:'Перейти на Pro → $9.99/мес', proPopular:'★ Самый популярный план',
     footer:'© 2026 TubeRank · Создано для авторов',
     privacy:'Конфиденциальность', terms:'Условия', contact:'Контакт',
   }
