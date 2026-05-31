@@ -261,6 +261,7 @@ Write a Reddit post that:
 4. Has a catchy but honest title
 5. Is 150-250 words
 6. Ends with a question to encourage comments
+7. Use single line breaks between paragraphs, NOT double. No extra blank lines. No markdown bold (**text**).
 
 Return ONLY in this exact format:
 TITLE: [title here]
