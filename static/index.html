@@ -99,7 +99,9 @@
   .pricing-head{font-family:'Syne',sans-serif;font-size:clamp(1.6rem,4vw,2.4rem);font-weight:700;text-align:center;letter-spacing:-0.025em;margin-bottom:0.75rem}
   .pricing-sub{text-align:center;color:var(--muted);font-size:0.9rem;margin-bottom:2.5rem}
   .plans{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
-  .plan{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:1.75rem}
+  .plan{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:1.75rem;transition:transform .3s cubic-bezier(.34,1.56,.64,1),border-color .2s}
+  .plan:hover{transform:scale(1.03);border-color:var(--accent)}
+  .plan.pro:hover{border-color:rgba(167,139,250,0.7)}
   .plan.pro{border-color:rgba(167,139,250,0.4);background:linear-gradient(135deg,#111116 0%,#130d1e 100%)}
   :root.light .plan.pro{background:linear-gradient(135deg,#f3f0ff 0%,#ede8ff 100%)}
   .plan-badge{font-size:0.65rem;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;display:inline-block;padding:0.25rem 0.65rem;border-radius:99px;margin-bottom:1rem}
@@ -120,7 +122,7 @@
   .plan-btn.pro-btn:hover{opacity:.88}
   .pro-label{font-size:0.75rem;color:var(--pro);text-align:center;margin-top:0.6rem}
   .plan-price-row{display:flex;align-items:baseline;gap:0.6rem;flex-wrap:wrap}
-  .plan-price-old{font-size:1.3rem;font-weight:600;color:var(--muted);text-decoration:line-through;opacity:0.6}
+  .plan-price-old{font-family:'Syne',sans-serif;font-size:2rem;font-weight:700;color:var(--muted);text-decoration:line-through;opacity:0.45}
   .save-badge{display:inline-block;background:rgba(74,222,128,0.15);color:#4ade80;border:1px solid rgba(74,222,128,0.3);font-size:0.65rem;font-weight:700;letter-spacing:0.06em;padding:0.2rem 0.5rem;border-radius:99px;margin-left:0.25rem;vertical-align:middle}
 
   .features{max-width:720px;margin:3rem auto 0;padding:0 2.5rem}
