@@ -24,30 +24,24 @@
   }
   body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;min-height:100vh;overflow-x:hidden;transition:background .3s,color .3s}
 
-  /* NAV */
   nav{display:flex;justify-content:space-between;align-items:center;padding:1.1rem 2rem;border-bottom:1px solid var(--border);position:sticky;top:0;background:var(--nav-bg);backdrop-filter:blur(12px);z-index:99;transition:background .3s;gap:1rem}
   .logo{font-family:'Syne',sans-serif;font-weight:800;font-size:1.15rem;letter-spacing:-0.02em;display:flex;align-items:center;gap:8px;flex-shrink:0}
   .logo-dot{width:8px;height:8px;background:var(--accent);border-radius:50%;display:inline-block}
-
   .nav-links{display:flex;gap:0.25rem;font-size:0.875rem;align-items:center;position:relative}
   .nav-links a{color:var(--muted);text-decoration:none;transition:color .2s;display:inline-block;padding:0.4rem 0.85rem;border-radius:99px;position:relative;z-index:1;white-space:nowrap}
   .nav-links a:hover{color:var(--text)}
   .nav-links a#tab-generator{font-size:0.95rem;font-weight:700;color:var(--accent)}
   .nav-pill{position:absolute;background:var(--pill-bg);border:1px solid var(--pill-border);border-radius:99px;height:calc(100% - 4px);top:2px;transition:left .25s cubic-bezier(.34,1.56,.64,1),width .25s cubic-bezier(.34,1.56,.64,1),opacity .2s;pointer-events:none;opacity:0;z-index:0}
-
   .nav-right{display:flex;align-items:center;gap:0.5rem;flex-shrink:0}
   .theme-toggle{background:var(--surface2);border:1px solid var(--border);border-radius:99px;padding:0.28rem 0.65rem;cursor:pointer;font-size:0.78rem;color:var(--muted);font-family:'DM Sans',sans-serif;transition:all .2s;display:flex;align-items:center;gap:4px}
   .theme-toggle:hover{color:var(--text);border-color:var(--muted)}
   .nav-cta{background:var(--accent);color:#0a0a0b;font-size:0.78rem;font-weight:600;padding:0.4rem 1rem;border-radius:6px;border:none;cursor:pointer;font-family:'DM Sans',sans-serif;transition:opacity .2s;white-space:nowrap}
   .nav-cta:hover{opacity:.85}
-
-  /* LANGUAGE SWITCHER */
   .lang-switch{display:flex;gap:2px;background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:2px}
   .lang-btn{background:none;border:none;border-radius:6px;padding:0.18rem 0.4rem;font-size:0.7rem;font-weight:600;color:var(--muted);cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .15s;letter-spacing:0.04em}
   .lang-btn.active{background:var(--surface);color:var(--text);box-shadow:0 1px 2px rgba(0,0,0,0.15)}
   .lang-btn:hover:not(.active){color:var(--text)}
 
-  /* HERO */
   .hero{padding:5rem 2.5rem 4rem;max-width:860px;margin:0 auto;text-align:center}
   .badge{display:inline-flex;align-items:center;gap:6px;background:rgba(232,255,90,0.08);border:1px solid rgba(232,255,90,0.2);color:var(--accent);font-size:0.72rem;font-weight:500;padding:0.3rem 0.85rem;border-radius:99px;margin-bottom:2rem;letter-spacing:0.05em;text-transform:uppercase}
   :root.light .badge{background:rgba(108,78,255,0.07);border-color:rgba(108,78,255,0.2)}
@@ -57,7 +51,6 @@
   h1 .line2{color:var(--accent)}
   .subhead{font-size:1.05rem;color:var(--muted);max-width:520px;margin:0 auto 2.5rem;line-height:1.65;font-weight:300}
 
-  /* INPUT */
   .input-wrap{background:var(--surface);border:1.5px solid var(--border);border-radius:12px;display:flex;align-items:center;max-width:620px;margin:0 auto;padding:6px 6px 6px 18px;transition:border-color .2s;min-width:0}
   .input-wrap:focus-within{border-color:var(--accent)}
   :root.light .input-wrap{background:#fff;border-color:#bbbbb6}
@@ -68,8 +61,6 @@
   .gen-btn:hover{opacity:.88}
   .gen-btn:active{transform:scale(0.98)}
   .hint{font-size:0.75rem;color:var(--muted);margin-top:0.75rem;opacity:.7}
-
-  /* EMOJI TOGGLE */
   .emoji-row{display:flex;align-items:center;gap:0.5rem;max-width:620px;margin:0.6rem auto 0;padding:0 4px;flex-wrap:wrap}
   .emoji-label{font-size:0.75rem;color:var(--muted);white-space:nowrap}
   .emoji-opt{background:var(--surface);border:1px solid var(--border);border-radius:20px;padding:0.28rem 0.7rem;font-size:0.75rem;color:var(--muted);cursor:pointer;transition:all .15s;font-family:inherit}
@@ -77,13 +68,12 @@
   .emoji-opt.active{border-color:var(--accent);color:var(--accent);background:var(--pill-bg)}
   :root.light .emoji-opt{background:#fff;border-color:#bbbbb6}
 
-  /* OUTPUT */
   .output{max-width:720px;margin:3rem auto;padding:0 2.5rem}
   .output-label{font-size:0.7rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);margin-bottom:1.2rem;display:flex;align-items:center;gap:8px}
   .output-label::after{content:'';flex:1;height:1px;background:var(--border)}
   .output-card{background:var(--surface);border:1px solid var(--border);border-radius:12px;overflow:hidden;margin-bottom:0.75rem}
   :root.light .output-card{box-shadow:0 1px 4px rgba(0,0,0,0.06)}
-  .oc-header{padding:0.75rem 1.25rem;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between}
+  .oc-header{padding:0.75rem 1.25rem;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:0.5rem}
   .oc-tag{font-size:0.68rem;font-weight:600;letter-spacing:0.08em;text-transform:uppercase}
   .tag-title{color:var(--accent)}
   .tag-desc{color:#60cdff}
@@ -99,13 +89,11 @@
   .score-dot{width:6px;height:6px;border-radius:50%}
   .green{background:#4ade80}.yellow{background:#facc15}.red{background:#f87171}
 
-  /* STATS */
   .stats{display:grid;grid-template-columns:repeat(3,1fr);max-width:720px;margin:0 auto 1rem;padding:0 2.5rem;gap:1px;background:var(--border);border:1px solid var(--border);border-radius:12px;overflow:hidden}
   .stat{background:var(--surface);padding:1.5rem;text-align:center}
   .stat-n{font-family:'Syne',sans-serif;font-size:1.8rem;font-weight:700;color:var(--text)}
   .stat-l{font-size:0.75rem;color:var(--muted);margin-top:2px}
 
-  /* PRICING */
   .pricing{max-width:760px;margin:5rem auto;padding:0 2.5rem}
   .pricing-label{font-size:0.7rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);text-align:center;margin-bottom:0.5rem}
   .pricing-head{font-family:'Syne',sans-serif;font-size:clamp(1.6rem,4vw,2.4rem);font-weight:700;text-align:center;letter-spacing:-0.025em;margin-bottom:0.75rem}
@@ -132,7 +120,6 @@
   .plan-btn.pro-btn:hover{opacity:.88}
   .pro-label{font-size:0.75rem;color:var(--pro);text-align:center;margin-top:0.6rem}
 
-  /* FEATURES */
   .features{max-width:720px;margin:3rem auto 0;padding:0 2.5rem}
   .features-label{font-size:0.72rem;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:var(--muted);margin-bottom:0.75rem}
   .features-head{font-family:'Syne',sans-serif;font-size:1.6rem;font-weight:800;margin-bottom:0.75rem;letter-spacing:-0.02em}
@@ -146,26 +133,21 @@
   .feat-title{font-family:'Syne',sans-serif;font-size:0.95rem;font-weight:700;margin-bottom:0.35rem}
   .feat-desc{font-size:0.82rem;color:var(--muted);line-height:1.55}
 
-  /* TOOLS */
   .tool-body{padding:0.5rem 1.25rem 1.25rem}
   .tool-desc{color:var(--muted);font-size:0.85rem;margin-bottom:1rem;line-height:1.5}
   .tool-body .input-wrap{margin:0 0 0.75rem;max-width:100%}
-  .tool-output-row{min-height:1.5rem}
   .tool-copy-row{margin-top:0.75rem;display:none}
 
-  /* SPINNER */
   .generating{display:none;align-items:center;gap:8px;font-size:0.8rem;color:var(--muted);margin-top:0.75rem}
   .spinner{width:14px;height:14px;border:2px solid var(--border);border-top-color:var(--accent);border-radius:50%;animation:spin .6s linear infinite}
   @keyframes spin{to{transform:rotate(360deg)}}
   .output-results{display:none}
 
-  /* FOOTER */
   footer{border-top:1px solid var(--border);padding:2rem 2.5rem;display:flex;justify-content:space-between;align-items:center;font-size:0.78rem;color:var(--muted)}
   .footer-links{display:flex;gap:1.5rem}
   .footer-links a{color:var(--muted);text-decoration:none}
   .footer-links a:hover{color:var(--text)}
 
-  /* MOBILE */
   @media(max-width:640px){
     nav{padding:0.75rem 1rem;flex-wrap:wrap;gap:0.4rem}
     .nav-links{order:3;width:100%;border-top:1px solid var(--border);padding-top:0.6rem;justify-content:center}
@@ -183,6 +165,7 @@
     .features{padding:0 1.25rem}
     .lang-switch{display:none}
     .nav-cta{display:none}
+    .tool-body{padding:0.5rem 1rem 1rem}
   }
 </style>
 
@@ -205,6 +188,7 @@
   </div>
 </nav>
 
+<!-- GENERATOR PAGE -->
 <div id="page-generator">
 <section class="hero">
   <div class="badge"><span class="badge-dot"></span><span id="txt-badge">Powered by AI · 2 min setup</span></div>
@@ -227,9 +211,9 @@
 </section>
 
 <div class="stats">
-  <div class="stat"><div class="stat-n">14M+</div><div class="stat-l">Tags generated</div></div>
-  <div class="stat"><div class="stat-n">340K</div><div class="stat-l">Creators using TubeRank</div></div>
-  <div class="stat"><div class="stat-n">2.4×</div><div class="stat-l">Average views increase</div></div>
+  <div class="stat"><div class="stat-n">14M+</div><div class="stat-l" id="txt-stat1">Tags generated</div></div>
+  <div class="stat"><div class="stat-n">340K</div><div class="stat-l" id="txt-stat2">Creators using TubeRank</div></div>
+  <div class="stat"><div class="stat-n">2.4×</div><div class="stat-l" id="txt-stat3">Average views increase</div></div>
 </div>
 
 <div class="output" id="output-section">
@@ -239,8 +223,8 @@
       <div class="oc-header"><span class="oc-tag tag-title">Title</span></div>
       <div class="oc-body">10 Guitar Chords Every Beginner MUST Know (Play Songs in 30 Days)</div>
       <div class="score-row">
-        <span class="score-item"><span class="score-dot green"></span>High CTR potential</span>
-        <span class="score-item"><span class="score-dot green"></span>Keyword optimized</span>
+        <span class="score-item"><span class="score-dot green"></span><span id="txt-score1">High CTR potential</span></span>
+        <span class="score-item"><span class="score-dot green"></span><span id="txt-score2">Keyword optimized</span></span>
       </div>
     </div>
     <div class="output-card">
@@ -260,39 +244,40 @@
   </div>
   <div id="real-output" class="output-results">
     <div class="output-card">
-      <div class="oc-header"><span class="oc-tag tag-title">Title</span><button class="copy-btn" onclick="copyText(this,'title-text')">Copy</button></div>
+      <div class="oc-header"><span class="oc-tag tag-title">Title</span><button class="copy-btn" id="copy-title" onclick="copyText(this,'title-text')">Copy</button></div>
       <div class="oc-body" id="title-text"></div>
     </div>
     <div class="output-card">
-      <div class="oc-header"><span class="oc-tag tag-desc">Description</span><button class="copy-btn" onclick="copyText(this,'desc-text')">Copy</button></div>
+      <div class="oc-header"><span class="oc-tag tag-desc">Description</span><button class="copy-btn" id="copy-desc" onclick="copyText(this,'desc-text')">Copy</button></div>
       <div class="oc-body" id="desc-text"></div>
     </div>
     <div class="output-card">
-      <div class="oc-header"><span class="oc-tag tag-tags">Tags</span><button class="copy-btn" onclick="copyText(this,'tags-text')">Copy all</button></div>
+      <div class="oc-header"><span class="oc-tag tag-tags">Tags</span><button class="copy-btn" id="copy-tags" onclick="copyText(this,'tags-text')">Copy all</button></div>
       <div class="tags-row" id="tags-text"></div>
     </div>
     <div class="output-card">
-      <div class="oc-header"><span class="oc-tag" style="background:rgba(99,179,237,0.12);color:#63b3ed">Hashtags</span><button class="copy-btn" onclick="copyText(this,'hashtags-text')">Copy all</button></div>
+      <div class="oc-header"><span class="oc-tag" style="background:rgba(99,179,237,0.12);color:#63b3ed">Hashtags</span><button class="copy-btn" id="copy-hashtags" onclick="copyText(this,'hashtags-text')">Copy all</button></div>
       <div class="tags-row" id="hashtags-text"></div>
     </div>
   </div>
 </div>
 
 <div class="features">
-  <div class="features-label">Why TubeRank</div>
+  <div class="features-label" id="txt-feat-label">Why TubeRank</div>
   <h2 class="features-head" id="txt-feat-head">Everything you need to rank on YouTube</h2>
   <p class="features-sub" id="txt-feat-sub">Stop spending hours on SEO. TubeRank uses AI to generate everything in seconds — so you can focus on creating.</p>
   <div class="features-grid">
-    <div class="feat-card"><div class="feat-icon">⚡</div><div class="feat-title">AI-Powered in Seconds</div><div class="feat-desc">Get a complete SEO package — title, description, tags and hashtags — generated by Claude AI in under 10 seconds.</div></div>
-    <div class="feat-card"><div class="feat-icon">🎯</div><div class="feat-title">Deep Audience Analysis</div><div class="feat-desc">Pro users get maximum-impact copy crafted around real viewer psychology, pain points and search intent.</div></div>
-    <div class="feat-card"><div class="feat-icon">🌍</div><div class="feat-title">Any Language</div><div class="feat-desc">Type your topic in English, Spanish, Russian or any language — TubeRank detects it automatically.</div></div>
-    <div class="feat-card"><div class="feat-icon">🔒</div><div class="feat-title">No Sign-Up Required</div><div class="feat-desc">Start generating immediately — no account, no credit card, no friction. Just enter your topic and go.</div></div>
-    <div class="feat-card"><div class="feat-icon">🛠️</div><div class="feat-title">Individual SEO Tools</div><div class="feat-desc">Need just hashtags or tags? Use our standalone tools separately for quick, targeted results.</div></div>
-    <div class="feat-card"><div class="feat-icon">💸</div><div class="feat-title">Half the Price</div><div class="feat-desc">TubeRank Pro is $10/month — while competitors charge $19–49/month for the same core features.</div></div>
+    <div class="feat-card"><div class="feat-icon">⚡</div><div class="feat-title" id="txt-f1t">AI-Powered in Seconds</div><div class="feat-desc" id="txt-f1d">Get a complete SEO package — title, description, tags and hashtags — generated by Claude AI in under 10 seconds.</div></div>
+    <div class="feat-card"><div class="feat-icon">🎯</div><div class="feat-title" id="txt-f2t">Deep Audience Analysis</div><div class="feat-desc" id="txt-f2d">Pro users get maximum-impact copy crafted around real viewer psychology, pain points and search intent.</div></div>
+    <div class="feat-card"><div class="feat-icon">🌍</div><div class="feat-title" id="txt-f3t">Any Language</div><div class="feat-desc" id="txt-f3d">Type your topic in English, Spanish, Russian or any language — TubeRank detects it automatically.</div></div>
+    <div class="feat-card"><div class="feat-icon">🔒</div><div class="feat-title" id="txt-f4t">No Sign-Up Required</div><div class="feat-desc" id="txt-f4d">Start generating immediately — no account, no credit card, no friction. Just enter your topic and go.</div></div>
+    <div class="feat-card"><div class="feat-icon">🛠️</div><div class="feat-title" id="txt-f5t">Individual SEO Tools</div><div class="feat-desc" id="txt-f5d">Need just hashtags or tags? Use our standalone tools separately for quick, targeted results.</div></div>
+    <div class="feat-card"><div class="feat-icon">💸</div><div class="feat-title" id="txt-f6t">Half the Price</div><div class="feat-desc" id="txt-f6d">TubeRank Pro is $10/month — while competitors charge $19–49/month for the same core features.</div></div>
   </div>
 </div>
 </div>
 
+<!-- TOOLS PAGE -->
 <div id="page-tools" style="display:none">
 <section style="max-width:720px;margin:3rem auto;padding:0 2.5rem">
   <div class="pricing-label">Tools</div>
@@ -301,61 +286,64 @@
   <div style="display:flex;flex-direction:column;gap:1.5rem;margin-top:2rem">
 
     <div class="output-card">
-      <div class="oc-header"><span class="oc-tag" style="background:rgba(99,179,237,0.12);color:#63b3ed">Hashtag Generator</span></div>
+      <div class="oc-header"><span class="oc-tag" style="background:rgba(99,179,237,0.12);color:#63b3ed" id="txt-hashtag-head">Hashtag Generator</span></div>
       <div class="tool-body">
-        <p class="tool-desc">Generate 10 trending YouTube hashtags for your video topic.</p>
+        <p class="tool-desc" id="txt-hashtag-desc">Generate 10 trending YouTube hashtags for your video topic.</p>
         <div class="input-wrap">
           <input type="text" id="tool-hashtag-input" placeholder="Enter your video topic…" />
-          <button class="gen-btn" onclick="toolGenerate('hashtag')">Generate →</button>
+          <button class="gen-btn" id="btn-hashtag" onclick="toolGenerate('hashtag')">Generate →</button>
         </div>
-        <div class="tags-row tool-output-row" id="tool-hashtag-output"></div>
+        <div class="tags-row" id="tool-hashtag-output" style="min-height:1.5rem"></div>
         <div class="tool-copy-row" id="tool-hashtag-copy">
-          <button class="copy-btn" style="font-size:0.8rem;padding:0.3rem 0.75rem" onclick="copyRaw('tool-hashtag-raw')">Copy all</button>
+          <button class="copy-btn" style="font-size:0.8rem;padding:0.3rem 0.75rem" id="btn-copy-hashtag" onclick="copyRaw('tool-hashtag-raw')">Copy all</button>
           <span id="tool-hashtag-raw" style="display:none"></span>
         </div>
       </div>
     </div>
 
     <div class="output-card">
-      <div class="oc-header"><span class="oc-tag tag-tags">Tag Generator</span></div>
+      <div class="oc-header"><span class="oc-tag tag-tags" id="txt-tags-head">Tag Generator</span></div>
       <div class="tool-body">
-        <p class="tool-desc">Generate 15 SEO tags to maximize your video's discoverability.</p>
+        <p class="tool-desc" id="txt-tags-desc">Generate 15 SEO tags to maximize your video's discoverability.</p>
         <div class="input-wrap">
           <input type="text" id="tool-tags-input" placeholder="Enter your video topic…" />
-          <button class="gen-btn" onclick="toolGenerate('tags')">Generate →</button>
+          <button class="gen-btn" id="btn-tags" onclick="toolGenerate('tags')">Generate →</button>
         </div>
-        <div class="tags-row tool-output-row" id="tool-tags-output"></div>
+        <div class="tags-row" id="tool-tags-output" style="min-height:1.5rem"></div>
         <div class="tool-copy-row" id="tool-tags-copy">
-          <button class="copy-btn" style="font-size:0.8rem;padding:0.3rem 0.75rem" onclick="copyRaw('tool-tags-raw')">Copy all</button>
+          <button class="copy-btn" style="font-size:0.8rem;padding:0.3rem 0.75rem" id="btn-copy-tags" onclick="copyRaw('tool-tags-raw')">Copy all</button>
           <span id="tool-tags-raw" style="display:none"></span>
         </div>
       </div>
     </div>
 
     <div class="output-card">
-      <div class="oc-header"><span class="oc-tag" style="background:rgba(251,191,36,0.12);color:#fbbf24">Tag Extractor</span><span style="font-size:0.72rem;color:var(--muted);margin-left:0.5rem">Reveals competitor tags</span></div>
+      <div class="oc-header">
+        <span class="oc-tag" style="background:rgba(251,191,36,0.12);color:#fbbf24" id="txt-extract-head">Tag Extractor</span>
+        <span style="font-size:0.72rem;color:var(--muted)" id="txt-extract-badge">Reveals competitor tags</span>
+      </div>
       <div class="tool-body">
-        <p class="tool-desc">Paste any YouTube video URL and see all tags the creator is using.</p>
+        <p class="tool-desc" id="txt-extract-desc">Paste any YouTube video URL and see all tags the creator is using.</p>
         <div class="input-wrap">
           <input type="text" id="tool-extract-input" placeholder="https://youtube.com/watch?v=..." />
-          <button class="gen-btn" onclick="toolExtract()">Extract →</button>
+          <button class="gen-btn" id="btn-extract" onclick="toolExtract()">Extract →</button>
         </div>
         <div id="tool-extract-title" style="font-size:0.8rem;color:var(--muted);margin-bottom:0.5rem"></div>
-        <div class="tags-row tool-output-row" id="tool-extract-output"></div>
+        <div class="tags-row" id="tool-extract-output" style="min-height:1.5rem"></div>
         <div class="tool-copy-row" id="tool-extract-copy">
-          <button class="copy-btn" style="font-size:0.8rem;padding:0.3rem 0.75rem" onclick="copyRaw('tool-extract-raw')">Copy all tags</button>
+          <button class="copy-btn" style="font-size:0.8rem;padding:0.3rem 0.75rem" id="btn-copy-extract" onclick="copyRaw('tool-extract-raw')">Copy all tags</button>
           <span id="tool-extract-raw" style="display:none"></span>
         </div>
       </div>
     </div>
 
     <div class="output-card">
-      <div class="oc-header"><span class="oc-tag tag-title">Title Generator</span></div>
+      <div class="oc-header"><span class="oc-tag tag-title" id="txt-title-head">Title Generator</span></div>
       <div class="tool-body">
-        <p class="tool-desc">Generate 5 high-CTR title variations for your video.</p>
+        <p class="tool-desc" id="txt-title-desc">Generate 5 high-CTR title variations for your video.</p>
         <div class="input-wrap">
           <input type="text" id="tool-title-input" placeholder="Enter your video topic…" />
-          <button class="gen-btn" onclick="toolGenerate('title')">Generate →</button>
+          <button class="gen-btn" id="btn-title" onclick="toolGenerate('title')">Generate →</button>
         </div>
         <div id="tool-title-output" style="margin-top:0.5rem;display:flex;flex-direction:column;gap:0.5rem"></div>
       </div>
@@ -365,112 +353,234 @@
 </section>
 </div>
 
+<!-- PRICING PAGE -->
 <div id="page-pricing" style="display:none">
 <section class="pricing">
   <div class="pricing-label">Pricing</div>
-  <h2 class="pricing-head">Simple, honest pricing</h2>
-  <p class="pricing-sub">Start free. Upgrade when you're ready to scale.</p>
+  <h2 class="pricing-head" id="txt-price-head">Simple, honest pricing</h2>
+  <p class="pricing-sub" id="txt-price-sub">Start free. Upgrade when you're ready to scale.</p>
   <div class="plans">
     <div class="plan">
       <span class="plan-badge free-b">Free</span>
       <div class="plan-price">$0</div>
-      <div class="plan-period">forever</div>
+      <div class="plan-period" id="txt-free-period">forever</div>
       <div class="plan-divider"></div>
       <ul class="plan-features">
-        <li><span class="feat-check yes">✓</span>2 generations per day</li>
-        <li><span class="feat-check yes">✓</span>Basic SEO analysis</li>
-        <li><span class="feat-check yes">✓</span>Title, description & tags</li>
-        <li><span class="feat-check no">✗</span>Deep audience analysis</li>
-        <li><span class="feat-check no">✗</span>Bulk generation</li>
-        <li><span class="feat-check no">✗</span>Export to CSV</li>
+        <li><span class="feat-check yes">✓</span><span id="txt-free-f1">2 generations per day</span></li>
+        <li><span class="feat-check yes">✓</span><span id="txt-free-f2">Basic SEO analysis</span></li>
+        <li><span class="feat-check yes">✓</span><span id="txt-free-f3">Title, description &amp; tags</span></li>
+        <li><span class="feat-check no">✗</span><span id="txt-free-f4">Deep audience analysis</span></li>
+        <li><span class="feat-check no">✗</span><span id="txt-free-f5">Bulk generation</span></li>
+        <li><span class="feat-check no">✗</span><span id="txt-free-f6">Export to CSV</span></li>
       </ul>
-      <button class="plan-btn free-btn">Get started free</button>
+      <button class="plan-btn free-btn" id="txt-free-btn">Get started free</button>
     </div>
     <div class="plan pro">
       <span class="plan-badge pro-b">Pro</span>
       <div class="plan-price" style="color:var(--pro)">$10</div>
-      <div class="plan-period">per month · cancel anytime</div>
+      <div class="plan-period" id="txt-pro-period">per month · cancel anytime</div>
       <div class="plan-divider" style="background:rgba(167,139,250,0.2)"></div>
       <ul class="plan-features">
-        <li><span class="feat-check yes">✓</span><strong style="color:var(--text)">Unlimited</strong> generations</li>
-        <li><span class="feat-check yes" style="background:rgba(167,139,250,0.12);color:var(--pro)">✓</span><strong style="color:var(--text)">Deep audience analysis</strong></li>
-        <li><span class="feat-check yes" style="background:rgba(167,139,250,0.12);color:var(--pro)">✓</span><strong style="color:var(--text)">Max-impact copy & hooks</strong></li>
-        <li><span class="feat-check yes" style="background:rgba(167,139,250,0.12);color:var(--pro)">✓</span>Bulk generation (10+ videos)</li>
-        <li><span class="feat-check yes" style="background:rgba(167,139,250,0.12);color:var(--pro)">✓</span>Export to CSV</li>
-        <li><span class="feat-check yes" style="background:rgba(167,139,250,0.12);color:var(--pro)">✓</span>Priority support</li>
+        <li><span class="feat-check yes">✓</span><span id="txt-pro-f1"><strong style="color:var(--text)">Unlimited</strong> generations</span></li>
+        <li><span class="feat-check yes" style="background:rgba(167,139,250,0.12);color:var(--pro)">✓</span><span id="txt-pro-f2"><strong style="color:var(--text)">Deep audience analysis</strong></span></li>
+        <li><span class="feat-check yes" style="background:rgba(167,139,250,0.12);color:var(--pro)">✓</span><span id="txt-pro-f3"><strong style="color:var(--text)">Max-impact copy &amp; hooks</strong></span></li>
+        <li><span class="feat-check yes" style="background:rgba(167,139,250,0.12);color:var(--pro)">✓</span><span id="txt-pro-f4">Bulk generation (10+ videos)</span></li>
+        <li><span class="feat-check yes" style="background:rgba(167,139,250,0.12);color:var(--pro)">✓</span><span id="txt-pro-f5">Export to CSV</span></li>
+        <li><span class="feat-check yes" style="background:rgba(167,139,250,0.12);color:var(--pro)">✓</span><span id="txt-pro-f6">Priority support</span></li>
       </ul>
-      <button class="plan-btn pro-btn" onclick="startCheckout()">Start Pro → $10/mo</button>
-      <div class="pro-label">★ Most popular plan</div>
+      <button class="plan-btn pro-btn" onclick="startCheckout()" id="txt-pro-btn">Start Pro → $10/mo</button>
+      <div class="pro-label" id="txt-pro-popular">★ Most popular plan</div>
     </div>
   </div>
 </section>
 </div>
 
 <footer>
-  <div style="color:var(--muted)">© 2026 TubeRank · Made for creators</div>
+  <div style="color:var(--muted)" id="txt-footer">© 2026 TubeRank · Made for creators</div>
   <div class="footer-links">
-    <a href="/static/privacy.html">Privacy</a>
-    <a href="/static/terms.html">Terms</a>
-    <a href="mailto:tuberank.support@gmail.com">Contact</a>
+    <a href="/static/privacy.html" id="txt-privacy">Privacy</a>
+    <a href="/static/terms.html" id="txt-terms">Terms</a>
+    <a href="mailto:tuberank.support@gmail.com" id="txt-contact">Contact</a>
   </div>
 </footer>
 
 <script>
-/* ── LANGUAGE ── */
+/* ── LANGUAGE STRINGS ── */
 const LANGS = {
   en: {
+    navTools:'Tools', navGen:'Generator', navPrice:'Price',
     badge:'Powered by AI · 2 min setup',
     h1a:'Rank your videos', h1b:'on autopilot.',
     subhead:'Generate high-converting YouTube titles, descriptions, and tags in seconds. Stop guessing — start growing.',
     placeholder:"Enter your video topic… e.g. 'beginner guitar chords'",
     genBtn:'Generate SEO →', hint:'No sign-up needed · 2 free generations per day',
     emojiLabel:'Emojis:', generating:'Generating your SEO package…',
-    toolsHead:'Individual SEO Tools', toolsSub:'Use each tool separately for quick results.',
+    stat1:'Tags generated', stat2:'Creators using TubeRank', stat3:'Average views increase',
+    score1:'High CTR potential', score2:'Keyword optimized',
+    featLabel:'Why TubeRank',
     featHead:'Everything you need to rank on YouTube',
     featSub:'Stop spending hours on SEO. TubeRank uses AI to generate everything in seconds — so you can focus on creating.',
+    f1t:'AI-Powered in Seconds', f1d:'Get a complete SEO package — title, description, tags and hashtags — generated by Claude AI in under 10 seconds.',
+    f2t:'Deep Audience Analysis', f2d:'Pro users get maximum-impact copy crafted around real viewer psychology, pain points and search intent.',
+    f3t:'Any Language', f3d:'Type your topic in English, Spanish, Russian or any language — TubeRank detects it automatically.',
+    f4t:'No Sign-Up Required', f4d:'Start generating immediately — no account, no credit card, no friction. Just enter your topic and go.',
+    f5t:'Individual SEO Tools', f5d:'Need just hashtags or tags? Use our standalone tools separately for quick, targeted results.',
+    f6t:'Half the Price', f6d:'TubeRank Pro is $10/month — while competitors charge $19–49/month for the same core features.',
+    toolsHead:'Individual SEO Tools', toolsSub:'Use each tool separately for quick results.',
+    hashtagHead:'Hashtag Generator', hashtagDesc:'Generate 10 trending YouTube hashtags for your video topic.',
+    tagsHead:'Tag Generator', tagsDesc:"Generate 15 SEO tags to maximize your video's discoverability.",
+    extractHead:'Tag Extractor', extractBadge:'Reveals competitor tags',
+    extractDesc:'Paste any YouTube video URL and see all tags the creator is using.',
+    titleHead:'Title Generator', titleDesc:'Generate 5 high-CTR title variations for your video.',
+    toolPlaceholder:'Enter your video topic…', extractPlaceholder:'https://youtube.com/watch?v=...',
+    generateBtn:'Generate →', extractBtn:'Extract →',
+    copyAll:'Copy all', copyAllTags:'Copy all tags', copy:'Copy',
+    priceHead:'Simple, honest pricing', priceSub:'Start free. Upgrade when you\'re ready to scale.',
+    freePeriod:'forever', proPeriod:'per month · cancel anytime',
+    freeF1:'2 generations per day', freeF2:'Basic SEO analysis', freeF3:'Title, description & tags',
+    freeF4:'Deep audience analysis', freeF5:'Bulk generation', freeF6:'Export to CSV',
+    proF1:'<strong style="color:var(--text)">Unlimited</strong> generations',
+    proF2:'<strong style="color:var(--text)">Deep audience analysis</strong>',
+    proF3:'<strong style="color:var(--text)">Max-impact copy & hooks</strong>',
+    proF4:'Bulk generation (10+ videos)', proF5:'Export to CSV', proF6:'Priority support',
+    freeBtn:'Get started free', proBtn:'Start Pro → $10/mo', proPopular:'★ Most popular plan',
+    footer:'© 2026 TubeRank · Made for creators',
+    privacy:'Privacy', terms:'Terms', contact:'Contact',
   },
   es: {
+    navTools:'Herramientas', navGen:'Generador', navPrice:'Precio',
     badge:'Impulsado por IA · Configuración en 2 min',
     h1a:'Posiciona tus videos', h1b:'en piloto automático.',
     subhead:'Genera títulos, descripciones y etiquetas para YouTube en segundos. Deja de adivinar — empieza a crecer.',
     placeholder:'Escribe el tema de tu video…',
     genBtn:'Generar SEO →', hint:'Sin registro · 2 generaciones gratis por día',
     emojiLabel:'Emojis:', generating:'Generando tu paquete SEO…',
-    toolsHead:'Herramientas SEO individuales', toolsSub:'Usa cada herramienta por separado para resultados rápidos.',
+    stat1:'Etiquetas generadas', stat2:'Creadores usando TubeRank', stat3:'Aumento promedio de visitas',
+    score1:'Alto potencial de clics', score2:'Palabras clave optimizadas',
+    featLabel:'Por qué TubeRank',
     featHead:'Todo lo que necesitas para posicionarte en YouTube',
     featSub:'Deja de perder horas en SEO. TubeRank usa IA para generar todo en segundos.',
+    f1t:'IA en segundos', f1d:'Obtén un paquete SEO completo — título, descripción, etiquetas y hashtags — en menos de 10 segundos.',
+    f2t:'Análisis profundo de audiencia', f2d:'Los usuarios Pro obtienen textos de máximo impacto basados en la psicología real del espectador.',
+    f3t:'Cualquier idioma', f3d:'Escribe en inglés, español, ruso o cualquier idioma — TubeRank lo detecta automáticamente.',
+    f4t:'Sin registro', f4d:'Empieza a generar de inmediato — sin cuenta, sin tarjeta, sin fricción.',
+    f5t:'Herramientas SEO individuales', f5d:'¿Solo necesitas hashtags o etiquetas? Usa nuestras herramientas por separado.',
+    f6t:'La mitad del precio', f6d:'TubeRank Pro es $10/mes — mientras los competidores cobran $19–49/mes.',
+    toolsHead:'Herramientas SEO individuales', toolsSub:'Usa cada herramienta por separado para resultados rápidos.',
+    hashtagHead:'Generador de Hashtags', hashtagDesc:'Genera 10 hashtags de YouTube en tendencia para tu video.',
+    tagsHead:'Generador de Etiquetas', tagsDesc:'Genera 15 etiquetas SEO para maximizar la visibilidad de tu video.',
+    extractHead:'Extractor de Etiquetas', extractBadge:'Revela las etiquetas de la competencia',
+    extractDesc:'Pega cualquier URL de YouTube y ve todas las etiquetas que usa el creador.',
+    titleHead:'Generador de Títulos', titleDesc:'Genera 5 variaciones de títulos de alto CTR para tu video.',
+    toolPlaceholder:'Escribe el tema de tu video…', extractPlaceholder:'https://youtube.com/watch?v=...',
+    generateBtn:'Generar →', extractBtn:'Extraer →',
+    copyAll:'Copiar todo', copyAllTags:'Copiar todas las etiquetas', copy:'Copiar',
+    priceHead:'Precios simples y honestos', priceSub:'Empieza gratis. Mejora cuando estés listo.',
+    freePeriod:'para siempre', proPeriod:'por mes · cancela cuando quieras',
+    freeF1:'2 generaciones por día', freeF2:'Análisis SEO básico', freeF3:'Título, descripción y etiquetas',
+    freeF4:'Análisis profundo de audiencia', freeF5:'Generación masiva', freeF6:'Exportar a CSV',
+    proF1:'<strong style="color:var(--text)">Generaciones ilimitadas</strong>',
+    proF2:'<strong style="color:var(--text)">Análisis profundo de audiencia</strong>',
+    proF3:'<strong style="color:var(--text)">Textos de máximo impacto</strong>',
+    proF4:'Generación masiva (10+ videos)', proF5:'Exportar a CSV', proF6:'Soporte prioritario',
+    freeBtn:'Empezar gratis', proBtn:'Iniciar Pro → $10/mes', proPopular:'★ Plan más popular',
+    footer:'© 2026 TubeRank · Hecho para creadores',
+    privacy:'Privacidad', terms:'Términos', contact:'Contacto',
   },
   ru: {
+    navTools:'Инструменты', navGen:'Генератор', navPrice:'Цена',
     badge:'На базе ИИ · Настройка за 2 мин',
     h1a:'Продвигай видео', h1b:'на автопилоте.',
     subhead:'Генерируй заголовки, описания и теги для YouTube за секунды. Хватит гадать — начни расти.',
     placeholder:'Введи тему видео…',
     genBtn:'Создать SEO →', hint:'Без регистрации · 2 бесплатных генерации в день',
     emojiLabel:'Эмодзи:', generating:'Генерируем SEO-пакет…',
-    toolsHead:'Отдельные SEO-инструменты', toolsSub:'Используй каждый инструмент отдельно.',
+    stat1:'Тегов сгенерировано', stat2:'Авторов используют TubeRank', stat3:'Рост просмотров в среднем',
+    score1:'Высокий CTR потенциал', score2:'Оптимизировано под ключи',
+    featLabel:'Почему TubeRank',
     featHead:'Всё для продвижения на YouTube',
-    featSub:'Хватит тратить часы на SEO. TubeRank использует ИИ для мгновенной генерации.',
+    featSub:'Хватит тратить часы на SEO. TubeRank использует ИИ для мгновенной генерации — чтобы ты мог сосредоточиться на контенте.',
+    f1t:'ИИ за секунды', f1d:'Полный SEO-пакет — заголовок, описание, теги и хэштеги — готов за 10 секунд.',
+    f2t:'Глубокий анализ аудитории', f2d:'Pro-пользователи получают тексты максимального воздействия, основанные на психологии зрителя.',
+    f3t:'Любой язык', f3d:'Введи тему на русском, английском или любом другом языке — TubeRank определит его автоматически.',
+    f4t:'Без регистрации', f4d:'Начни генерировать сразу — без аккаунта, без карты, без лишних шагов.',
+    f5t:'Отдельные SEO-инструменты', f5d:'Нужны только хэштеги или теги? Используй инструменты по отдельности.',
+    f6t:'Вдвое дешевле конкурентов', f6d:'TubeRank Pro — $10/мес, тогда как конкуренты берут $19–49/мес за те же функции.',
+    toolsHead:'Отдельные SEO-инструменты', toolsSub:'Используй каждый инструмент отдельно для быстрых результатов.',
+    hashtagHead:'Генератор хэштегов', hashtagDesc:'Сгенерируй 10 актуальных хэштегов YouTube для своего видео.',
+    tagsHead:'Генератор тегов', tagsDesc:'Сгенерируй 15 SEO-тегов для максимального охвата видео.',
+    extractHead:'Экстрактор тегов', extractBadge:'Показывает теги конкурентов',
+    extractDesc:'Вставь ссылку на YouTube-видео и посмотри все теги автора.',
+    titleHead:'Генератор заголовков', titleDesc:'Сгенерируй 5 вариантов цепляющих заголовков для видео.',
+    toolPlaceholder:'Введи тему видео…', extractPlaceholder:'https://youtube.com/watch?v=...',
+    generateBtn:'Создать →', extractBtn:'Извлечь →',
+    copyAll:'Копировать всё', copyAllTags:'Копировать теги', copy:'Копировать',
+    priceHead:'Простые и честные цены', priceSub:'Начни бесплатно. Переходи на Pro когда будешь готов.',
+    freePeriod:'навсегда', proPeriod:'в месяц · отмена в любое время',
+    freeF1:'2 генерации в день', freeF2:'Базовый SEO-анализ', freeF3:'Заголовок, описание и теги',
+    freeF4:'Глубокий анализ аудитории', freeF5:'Массовая генерация', freeF6:'Экспорт в CSV',
+    proF1:'<strong style="color:var(--text)">Безлимитные</strong> генерации',
+    proF2:'<strong style="color:var(--text)">Глубокий анализ аудитории</strong>',
+    proF3:'<strong style="color:var(--text)">Тексты максимального воздействия</strong>',
+    proF4:'Массовая генерация (10+ видео)', proF5:'Экспорт в CSV', proF6:'Приоритетная поддержка',
+    freeBtn:'Начать бесплатно', proBtn:'Перейти на Pro → $10/мес', proPopular:'★ Самый популярный план',
+    footer:'© 2026 TubeRank · Создано для авторов',
+    privacy:'Конфиденциальность', terms:'Условия', contact:'Контакт',
   }
 };
+
 let currentLang = localStorage.getItem('tr_lang') || 'en';
 
 function applyLang(lang) {
   currentLang = lang;
   localStorage.setItem('tr_lang', lang);
   const s = LANGS[lang];
-  document.getElementById('txt-badge').textContent = s.badge;
-  document.getElementById('txt-h1a').textContent = s.h1a;
-  document.getElementById('txt-h1b').textContent = s.h1b;
-  document.getElementById('txt-subhead').textContent = s.subhead;
-  document.getElementById('topic-input').placeholder = s.placeholder;
-  document.getElementById('gen-btn').textContent = s.genBtn;
-  document.getElementById('txt-hint').textContent = s.hint;
-  document.getElementById('txt-emoji-label').textContent = s.emojiLabel;
-  document.getElementById('txt-generating').textContent = s.generating;
-  document.getElementById('txt-tools-head').textContent = s.toolsHead;
-  document.getElementById('txt-tools-sub').textContent = s.toolsSub;
-  document.getElementById('txt-feat-head').textContent = s.featHead;
-  document.getElementById('txt-feat-sub').textContent = s.featSub;
+  const set = (id, val, html) => { const el = document.getElementById(id); if (!el) return; if (html) el.innerHTML = val; else el.textContent = val; };
+  const ph = (id, val) => { const el = document.getElementById(id); if (el) el.placeholder = val; };
+
+  // Nav
+  set('tab-tools', s.navTools); set('tab-generator', s.navGen); set('tab-pricing', s.navPrice);
+  // Hero
+  set('txt-badge', s.badge); set('txt-h1a', s.h1a); set('txt-h1b', s.h1b);
+  set('txt-subhead', s.subhead); set('gen-btn', s.genBtn); set('txt-hint', s.hint);
+  set('txt-emoji-label', s.emojiLabel); set('txt-generating', s.generating);
+  ph('topic-input', s.placeholder);
+  // Stats
+  set('txt-stat1', s.stat1); set('txt-stat2', s.stat2); set('txt-stat3', s.stat3);
+  // Example output scores
+  set('txt-score1', s.score1); set('txt-score2', s.score2);
+  // Features
+  set('txt-feat-label', s.featLabel); set('txt-feat-head', s.featHead); set('txt-feat-sub', s.featSub);
+  set('txt-f1t', s.f1t); set('txt-f1d', s.f1d);
+  set('txt-f2t', s.f2t); set('txt-f2d', s.f2d);
+  set('txt-f3t', s.f3t); set('txt-f3d', s.f3d);
+  set('txt-f4t', s.f4t); set('txt-f4d', s.f4d);
+  set('txt-f5t', s.f5t); set('txt-f5d', s.f5d);
+  set('txt-f6t', s.f6t); set('txt-f6d', s.f6d);
+  // Tools page
+  set('txt-tools-head', s.toolsHead); set('txt-tools-sub', s.toolsSub);
+  set('txt-hashtag-head', s.hashtagHead); set('txt-hashtag-desc', s.hashtagDesc);
+  set('txt-tags-head', s.tagsHead); set('txt-tags-desc', s.tagsDesc);
+  set('txt-extract-head', s.extractHead); set('txt-extract-badge', s.extractBadge); set('txt-extract-desc', s.extractDesc);
+  set('txt-title-head', s.titleHead); set('txt-title-desc', s.titleDesc);
+  ph('tool-hashtag-input', s.toolPlaceholder); ph('tool-tags-input', s.toolPlaceholder); ph('tool-title-input', s.toolPlaceholder);
+  ph('tool-extract-input', s.extractPlaceholder);
+  set('btn-hashtag', s.generateBtn); set('btn-tags', s.generateBtn); set('btn-title', s.generateBtn);
+  set('btn-extract', s.extractBtn);
+  set('btn-copy-hashtag', s.copyAll); set('btn-copy-tags', s.copyAll); set('btn-copy-extract', s.copyAllTags);
+  set('copy-title', s.copy); set('copy-desc', s.copy);
+  set('copy-tags', s.copyAll); set('copy-hashtags', s.copyAll);
+  // Pricing
+  set('txt-price-head', s.priceHead); set('txt-price-sub', s.priceSub);
+  set('txt-free-period', s.freePeriod); set('txt-pro-period', s.proPeriod);
+  set('txt-free-f1', s.freeF1); set('txt-free-f2', s.freeF2); set('txt-free-f3', s.freeF3);
+  set('txt-free-f4', s.freeF4); set('txt-free-f5', s.freeF5); set('txt-free-f6', s.freeF6);
+  set('txt-pro-f1', s.proF1, true); set('txt-pro-f2', s.proF2, true); set('txt-pro-f3', s.proF3, true);
+  set('txt-pro-f4', s.proF4); set('txt-pro-f5', s.proF5); set('txt-pro-f6', s.proF6);
+  set('txt-free-btn', s.freeBtn); set('txt-pro-btn', s.proBtn); set('txt-pro-popular', s.proPopular);
+  // Footer
+  set('txt-footer', s.footer); set('txt-privacy', s.privacy); set('txt-terms', s.terms); set('txt-contact', s.contact);
+
   ['en','es','ru'].forEach(l => document.getElementById('lang-'+l).classList.toggle('active', l === lang));
 }
 applyLang(currentLang);
@@ -480,7 +590,6 @@ applyLang(currentLang);
   const pill = document.getElementById('nav-pill');
   const nav = document.getElementById('nav-links');
   let activeTab = 'generator';
-
   function movePillTo(el) {
     const parentRect = nav.getBoundingClientRect();
     const rect = el.getBoundingClientRect();
@@ -488,16 +597,11 @@ applyLang(currentLang);
     pill.style.left = (rect.left - parentRect.left) + 'px';
     pill.style.opacity = '1';
   }
-
-  nav.querySelectorAll('a').forEach(link => {
-    link.addEventListener('mouseenter', () => movePillTo(link));
-  });
+  nav.querySelectorAll('a').forEach(link => link.addEventListener('mouseenter', () => movePillTo(link)));
   nav.addEventListener('mouseleave', () => {
     const active = document.getElementById('tab-' + activeTab);
-    if (active) movePillTo(active);
-    else pill.style.opacity = '0';
+    if (active) movePillTo(active); else pill.style.opacity = '0';
   });
-
   window._setActivePillTab = function(tab) {
     activeTab = tab;
     const el = document.getElementById('tab-' + tab);
@@ -513,15 +617,13 @@ function setEmoji(mode) {
   ['none','medium','full'].forEach(m => document.getElementById('emoji-'+m).classList.toggle('active', m === mode));
 }
 
-/* ── GENERATOR ── */
+/* ── GENERATE ── */
 async function generate() {
   const topic = document.getElementById('topic-input').value.trim();
   if (!topic) { document.getElementById('topic-input').focus(); return; }
   const btn = document.getElementById('gen-btn');
   const status = document.getElementById('gen-status');
-  btn.disabled = true;
-  btn.textContent = '…';
-  status.style.display = 'flex';
+  btn.disabled = true; btn.textContent = '…'; status.style.display = 'flex';
   try {
     const res = await fetch('/generate-seo', {
       method:'POST', headers:{'Content-Type':'application/json'},
@@ -547,20 +649,16 @@ async function generate() {
     document.getElementById('real-output').style.display = 'block';
     document.getElementById('output-label').textContent = 'Your SEO results';
     document.getElementById('output-section').scrollIntoView({behavior:'smooth'});
-  } catch(e) {
-    alert('Error connecting to API. Please try again.');
-  } finally {
-    status.style.display = 'none';
-    btn.disabled = false;
-    btn.textContent = LANGS[currentLang].genBtn;
-  }
+  } catch(e) { alert('Error connecting to API. Please try again.'); }
+  finally { status.style.display = 'none'; btn.disabled = false; btn.textContent = LANGS[currentLang].genBtn; }
 }
 
 function copyText(btn, id) {
   const el = document.getElementById(id);
   navigator.clipboard.writeText(el.innerText || el.textContent).then(() => {
-    btn.textContent = 'Copied!';
-    setTimeout(() => btn.textContent = id.includes('tags') ? 'Copy all' : 'Copy', 1800);
+    const prev = btn.textContent;
+    btn.textContent = '✓';
+    setTimeout(() => btn.textContent = prev, 1800);
   });
 }
 
@@ -593,8 +691,7 @@ async function toolGenerate(type) {
   const inputs = {hashtag:'tool-hashtag-input', tags:'tool-tags-input', title:'tool-title-input'};
   const topic = document.getElementById(inputs[type]).value.trim();
   if (!topic) return;
-  const btn = event.target;
-  btn.textContent = '…'; btn.disabled = true;
+  const btn = event.target; btn.textContent = '…'; btn.disabled = true;
   try {
     const res = await fetch('/tool-generate', {
       method:'POST', headers:{'Content-Type':'application/json'},
@@ -602,6 +699,7 @@ async function toolGenerate(type) {
     });
     if (res.status === 429) { alert('Daily limit reached. Upgrade to Pro.'); return; }
     const data = await res.json();
+    const s = LANGS[currentLang];
     if (type === 'hashtag') {
       document.getElementById('tool-hashtag-output').innerHTML = data.result.map(h => `<span class="tag-pill" style="color:#63b3ed;border-color:rgba(99,179,237,0.2)">${h}</span>`).join('');
       document.getElementById('tool-hashtag-raw').textContent = data.result.join(' ');
@@ -611,10 +709,10 @@ async function toolGenerate(type) {
       document.getElementById('tool-tags-raw').textContent = data.result.join(', ');
       document.getElementById('tool-tags-copy').style.display = 'block';
     } else if (type === 'title') {
-      document.getElementById('tool-title-output').innerHTML = data.result.map(t => `<div style="background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:0.65rem 1rem;font-size:0.9rem;display:flex;justify-content:space-between;align-items:center;gap:1rem"><span style="color:var(--text)">${t}</span><button class="copy-btn" onclick="navigator.clipboard.writeText(this.previousElementSibling.textContent)">Copy</button></div>`).join('');
+      document.getElementById('tool-title-output').innerHTML = data.result.map(t => `<div style="background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:0.65rem 1rem;font-size:0.9rem;display:flex;justify-content:space-between;align-items:center;gap:1rem"><span style="color:var(--text)">${t}</span><button class="copy-btn" onclick="navigator.clipboard.writeText(this.previousElementSibling.textContent)">${s.copy}</button></div>`).join('');
     }
   } catch(e) { alert('Error. Please try again.'); }
-  finally { btn.textContent = 'Generate →'; btn.disabled = false; }
+  finally { btn.textContent = LANGS[currentLang].generateBtn; btn.disabled = false; }
 }
 
 function copyRaw(id) { navigator.clipboard.writeText(document.getElementById(id).textContent); }
@@ -622,8 +720,7 @@ function copyRaw(id) { navigator.clipboard.writeText(document.getElementById(id)
 async function toolExtract() {
   const url = document.getElementById('tool-extract-input').value.trim();
   if (!url) return;
-  const btn = event.target;
-  btn.textContent = '…'; btn.disabled = true;
+  const btn = event.target; btn.textContent = '…'; btn.disabled = true;
   document.getElementById('tool-extract-output').innerHTML = '';
   document.getElementById('tool-extract-title').textContent = '';
   document.getElementById('tool-extract-copy').style.display = 'none';
@@ -645,7 +742,7 @@ async function toolExtract() {
       document.getElementById('tool-extract-copy').style.display = 'block';
     }
   } catch(e) { alert('Error. Please try again.'); }
-  finally { btn.textContent = 'Extract →'; btn.disabled = false; }
+  finally { btn.textContent = LANGS[currentLang].extractBtn; btn.disabled = false; }
 }
 
 async function startCheckout() {
@@ -654,7 +751,6 @@ async function startCheckout() {
   window.location.href = data.url;
 }
 
-/* ── PRO STATUS ── */
 (function() {
   if (localStorage.getItem('tuberank_pro') === 'true') {
     const hint = document.getElementById('txt-hint');
