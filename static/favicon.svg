@@ -1,12 +1,12 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
   <!-- handle -->
   <line x1="20.5" y1="20.5" x2="29" y2="29" stroke="#e8ff5a" stroke-width="3.5" stroke-linecap="round"/>
-  <!-- lens fill (dark so T is readable) -->
+  <!-- lens fill -->
   <circle cx="12.5" cy="12.5" r="10" fill="#111113"/>
   <!-- lens ring -->
   <circle cx="12.5" cy="12.5" r="10" fill="none" stroke="#e8ff5a" stroke-width="2.5"/>
-  <!-- T horizontal -->
-  <rect x="6.5" y="8" width="12" height="2.8" rx="1.4" fill="#e8ff5a"/>
-  <!-- T vertical -->
-  <rect x="11.1" y="8" width="2.8" height="9.5" rx="1.4" fill="#e8ff5a"/>
+  <!-- T crossbar — curved arc following the circle -->
+  <path d="M 6.5,11 Q 12.5,6 18.5,11" stroke="#e8ff5a" stroke-width="2.8" stroke-linecap="round" fill="none"/>
+  <!-- T stem — rounded top connects to arc center, rounded bottom -->
+  <rect x="11.1" y="8.8" width="2.8" height="9.2" rx="1.4" fill="#e8ff5a"/>
 </svg>
