@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TubeRank Reddit Post Generator</title>
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:#0a0a0b;color:#f0f0f2;font-family:'Segoe UI',sans-serif;min-height:100vh;padding:2rem}
+  h1{font-size:1.6rem;font-weight:700;margin-bottom:0.5rem;color:#e8ff5a}
+  .subtitle{color:#8a8a94;margin-bottom:2rem;font-size:0.9rem}
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:0.75rem;margin-bottom:2rem}
+  .sub-btn{background:#18181c;border:1px solid #2a2a30;border-radius:10px;padding:1rem;cursor:pointer;text-align:left;transition:all .2s;color:#f0f0f2}
+  .sub-btn:hover{border-color:#e8ff5a;background:#1e1e22}
+  .sub-btn.active{border-color:#e8ff5a;background:#1e1e22}
+  .sub-name{font-weight:600;font-size:0.95rem;margin-bottom:0.25rem}
+  .sub-desc{font-size:0.75rem;color:#8a8a94}
+  .generate-btn{background:#e8ff5a;color:#0a0a0b;border:none;border-radius:10px;padding:0.9rem 2rem;font-size:1rem;font-weight:700;cursor:pointer;transition:opacity .2s;width:100%;margin-bottom:2rem}
+  .generate-btn:hover{opacity:0.85}
+  .generate-btn:disabled{opacity:0.4;cursor:not-allowed}
+  .result{display:none;background:#18181c;border:1px solid #2a2a30;border-radius:12px;padding:1.5rem;margin-bottom:1rem}
+  .result.show{display:block}
+  .label{font-size:0.75rem;color:#8a8a94;text-transform:uppercase;letter-spacing:0.05em;margin-bottom:0.5rem}
+  .title-box{font-size:1rem;font-weight:600;background:#111;border:1px solid #2a2a30;border-radius:8px;padding:0.75rem 1rem;margin-bottom:1rem;line-height:1.4}
+  .body-box{font-size:0.9rem;background:#111;border:1px solid #2a2a30;border-radius:8px;padding:0.75rem 1rem;line-height:1.6;white-space:pre-wrap;margin-bottom:1rem}
+  .copy-row{display:flex;gap:0.75rem}
+  .copy-btn{flex:1;background:#2a2a30;border:none;border-radius:8px;padding:0.6rem;color:#f0f0f2;cursor:pointer;font-size:0.85rem;transition:background .2s}
+  .copy-btn:hover{background:#3a3a42}
+  .copy-btn.copied{background:#22c55e;color:#fff}
+  .reddit-btn{flex:1;background:#ff4500;border:none;border-radius:8px;padding:0.6rem;color:#fff;cursor:pointer;font-size:0.85rem;font-weight:600;text-decoration:none;display:flex;align-items:center;justify-content:center;gap:0.4rem}
+  .reddit-btn:hover{opacity:0.85}
+  .spinner{display:none;text-align:center;padding:2rem;color:#8a8a94}
+  .spinner.show{display:block}
+</style>
+</head>
+<body>
+
+<h1>Reddit Post Generator</h1>
+<p class="subtitle">Select a subreddit → generate a post → copy & paste on Reddit</p>
+
+<div class="grid">
+  <button class="sub-btn active" data-key="1" onclick="select(this)">
+    <div class="sub-name">r/NewTubers</div>
+    <div class="sub-desc">New YouTubers growing their channel</div>
+  </button>
+  <button class="sub-btn" data-key="2" onclick="select(this)">
+    <div class="sub-name">r/youtubers</div>
+    <div class="sub-desc">All YouTubers optimizing content</div>
+  </button>
+  <button class="sub-btn" data-key="3" onclick="select(this)">
+    <div class="sub-name">r/juststart</div>
+    <div class="sub-desc">Online business builders</div>
+  </button>
+  <button class="sub-btn" data-key="4" onclick="select(this)">
+    <div class="sub-name">r/SideProject</div>
+    <div class="sub-desc">Developers & indie builders</div>
+  </button>
+  <button class="sub-btn" data-key="5" onclick="select(this)">
+    <div class="sub-name">r/EntrepreneurRideAlong</div>
+    <div class="sub-desc">Founders sharing progress</div>
+  </button>
+</div>
+
+<button class="generate-btn" onclick="generate()">Generate Post →</button>
+
+<div class="spinner" id="spinner">Generating post with Claude AI...</div>
+
+<div class="result" id="result">
+  <div class="label">Title</div>
+  <div class="title-box" id="title-box"></div>
+  <div class="label">Body</div>
+  <div class="body-box" id="body-box"></div>
+  <div class="copy-row">
+    <button class="copy-btn" onclick="copy('title')">Copy Title</button>
+    <button class="copy-btn" onclick="copy('body')">Copy Body</button>
+    <a class="reddit-btn" id="reddit-link" href="#" target="_blank">Open Reddit →</a>
+  </div>
+</div>
+
+<script>
+let selected = "1";
+const links = {
+  "1": "https://www.reddit.com/r/NewTubers/submit",
+  "2": "https://www.reddit.com/r/youtubers/submit",
+  "3": "https://www.reddit.com/r/juststart/submit",
+  "4": "https://www.reddit.com/r/SideProject/submit",
+  "5": "https://www.reddit.com/r/EntrepreneurRideAlong/submit",
+};
+
+function select(btn) {
+  document.querySelectorAll('.sub-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  selected = btn.dataset.key;
+}
+
+async function generate() {
+  document.getElementById('result').classList.remove('show');
+  document.getElementById('spinner').classList.add('show');
+  document.querySelector('.generate-btn').disabled = true;
+
+  try {
+    const res = await fetch('/reddit-post', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({subreddit_key: selected})
+    });
+    const data = await res.json();
+    document.getElementById('title-box').textContent = data.title;
+    document.getElementById('body-box').textContent = data.body;
+    document.getElementById('reddit-link').href = links[selected];
+    document.getElementById('result').classList.add('show');
+  } catch(e) {
+    alert('Error: ' + e.message);
+  } finally {
+    document.getElementById('spinner').classList.remove('show');
+    document.querySelector('.generate-btn').disabled = false;
+  }
+}
+
+function copy(type) {
+  const text = type === 'title'
+    ? document.getElementById('title-box').textContent
+    : document.getElementById('body-box').textContent;
+  navigator.clipboard.writeText(text);
+  const btns = document.querySelectorAll('.copy-btn');
+  const btn = type === 'title' ? btns[0] : btns[1];
+  btn.textContent = 'Copied!';
+  btn.classList.add('copied');
+  setTimeout(() => { btn.textContent = type === 'title' ? 'Copy Title' : 'Copy Body'; btn.classList.remove('copied'); }, 2000);
+}
+</script>
+</body>
+</html>

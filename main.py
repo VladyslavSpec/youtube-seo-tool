@@ -227,3 +227,54 @@ def verify_subscription(request: EmailRequest):
         limit=1,
     )
     return {"pro": len(subscriptions.data) > 0}
+
+
+SUBREDDITS = {
+    "1": {"name": "r/NewTubers", "audience": "new YouTubers struggling to grow", "style": "helpful beginner advice, mention tool casually at end"},
+    "2": {"name": "r/youtubers", "audience": "YouTubers optimizing their content", "style": "practical tips, tool as one of the solutions"},
+    "3": {"name": "r/juststart", "audience": "people building online businesses", "style": "build-in-public progress update"},
+    "4": {"name": "r/SideProject", "audience": "developers and indie builders", "style": "Show HN style - built this, here's what I learned"},
+    "5": {"name": "r/EntrepreneurRideAlong", "audience": "entrepreneurs building businesses", "style": "transparent founder update with lessons"},
+}
+
+class RedditRequest(BaseModel):
+    subreddit_key: str
+
+@app.post("/reddit-post")
+async def reddit_post(request: RedditRequest):
+    sub = SUBREDDITS.get(request.subreddit_key)
+    if not sub:
+        raise HTTPException(status_code=400, detail="Invalid subreddit key")
+
+    client = anthropic.Anthropic(api_key=os.environ.get("ANTHROPIC_API_KEY"))
+    prompt = f"""You are a Reddit user who built a YouTube SEO tool and wants to share it authentically.
+
+TOOL: TubeRank (gettuberank.com) — free AI YouTube SEO generator: titles, descriptions, tags, hashtags in seconds. Free: 2/day. Pro: $10/mo.
+
+TARGET: {sub['name']} — audience: {sub['audience']}
+STYLE: {sub['style']}
+
+Write a Reddit post that:
+1. Provides genuine value first (tips, story, insight)
+2. Mentions the tool naturally — NOT as an ad
+3. Sounds like a real person, not a marketer
+4. Has a catchy but honest title
+5. Is 150-250 words
+6. Ends with a question to encourage comments
+
+Return ONLY in this exact format:
+TITLE: [title here]
+---
+BODY:
+[body here]"""
+
+    message = client.messages.create(
+        model="claude-haiku-4-5-20251001",
+        max_tokens=600,
+        messages=[{"role": "user", "content": prompt}],
+    )
+    raw = message.content[0].text.strip()
+    parts = raw.split("---\nBODY:\n", 1)
+    title = parts[0].replace("TITLE: ", "").strip()
+    body = parts[1].strip() if len(parts) > 1 else raw
+    return {"title": title, "body": body}
