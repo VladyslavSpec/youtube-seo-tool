@@ -9,35 +9,43 @@
 <link rel="icon" type="image/svg+xml" href="/static/favicon.svg">
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
+  :root{--bg:#0a0a0b;--surface:#111113;--surface2:#18181c;--border:#2a2a30;--text:#f0f0f2;--muted:#8a8a94;--accent:#e8ff5a}
+  :root.light{--bg:#f4f4f2;--surface:#ffffff;--surface2:#ebebea;--border:#d4d4d0;--text:#111113;--muted:#6a6a74;--accent:#6c4eff}
   *{box-sizing:border-box;margin:0;padding:0}
-  body{background:#0a0a0b;color:#f0f0f2;font-family:'DM Sans',sans-serif;line-height:1.7}
+  body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;line-height:1.7;transition:background .3s,color .3s}
   .wrap{max-width:720px;margin:0 auto;padding:3rem 2rem}
   .top-bar{display:flex;justify-content:space-between;align-items:center;margin-bottom:2.5rem;flex-wrap:wrap;gap:0.75rem}
-  .back{color:#8a8a94;text-decoration:none;font-size:0.85rem}
-  .back:hover{color:#f0f0f2}
-  .lang-switch{display:flex;gap:2px;background:#18181c;border:1px solid #2a2a30;border-radius:8px;padding:2px}
-  .lang-btn{background:none;border:none;border-radius:6px;padding:0.18rem 0.4rem;font-size:0.7rem;font-weight:600;color:#8a8a94;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .15s;letter-spacing:0.04em}
-  .lang-btn.active{background:#111113;color:#f0f0f2}
-  .lang-btn:hover:not(.active){color:#f0f0f2}
-  h1{font-family:'Syne',sans-serif;font-size:2rem;font-weight:800;margin-bottom:0.5rem}
-  .date{color:#8a8a94;font-size:0.85rem;margin-bottom:2.5rem}
-  h2{font-family:'Syne',sans-serif;font-size:1.15rem;font-weight:700;margin:2rem 0 0.75rem;color:#e8ff5a}
-  p{color:#b0b0bc;margin-bottom:1rem;font-size:0.95rem}
-  ul{color:#b0b0bc;padding-left:1.5rem;margin-bottom:1rem;font-size:0.95rem}
+  .top-bar-right{display:flex;align-items:center;gap:0.5rem}
+  .back{color:var(--muted);text-decoration:none;font-size:0.85rem}
+  .back:hover{color:var(--text)}
+  .lang-switch{display:flex;gap:2px;background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:2px}
+  .lang-btn{background:none;border:none;border-radius:6px;padding:0.18rem 0.4rem;font-size:0.7rem;font-weight:600;color:var(--muted);cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .15s;letter-spacing:0.04em}
+  .lang-btn.active{background:var(--surface);color:var(--text)}
+  .lang-btn:hover:not(.active){color:var(--text)}
+  .theme-toggle{background:var(--surface2);border:1px solid var(--border);border-radius:99px;padding:0.2rem 0.6rem;cursor:pointer;font-size:0.75rem;color:var(--muted);font-family:'DM Sans',sans-serif;transition:all .2s}
+  .theme-toggle:hover{color:var(--text)}
+  h1{font-family:'Syne',sans-serif;font-size:2rem;font-weight:800;margin-bottom:0.5rem;color:var(--text)}
+  .date{color:var(--muted);font-size:0.85rem;margin-bottom:2.5rem}
+  h2{font-family:'Syne',sans-serif;font-size:1.15rem;font-weight:700;margin:2rem 0 0.75rem;color:var(--accent)}
+  p{color:var(--muted);margin-bottom:1rem;font-size:0.95rem}
+  ul{color:var(--muted);padding-left:1.5rem;margin-bottom:1rem;font-size:0.95rem}
   ul li{margin-bottom:0.4rem}
-  a{color:#e8ff5a;text-decoration:none}
+  a{color:var(--accent);text-decoration:none}
   a:hover{text-decoration:underline}
-  .divider{height:1px;background:#2a2a30;margin:2rem 0}
+  .divider{height:1px;background:var(--border);margin:2rem 0}
 </style>
 </head>
 <body>
 <div class="wrap">
   <div class="top-bar">
     <a href="/" class="back" id="txt-back">← Back to TubeRank</a>
-    <div class="lang-switch">
-      <button class="lang-btn" id="lang-en" onclick="applyLang('en')">EN</button>
-      <button class="lang-btn" id="lang-es" onclick="applyLang('es')">ES</button>
-      <button class="lang-btn" id="lang-ru" onclick="applyLang('ru')">RU</button>
+    <div class="top-bar-right">
+      <div class="lang-switch">
+        <button class="lang-btn" id="lang-en" onclick="applyLang('en')">EN</button>
+        <button class="lang-btn" id="lang-es" onclick="applyLang('es')">ES</button>
+        <button class="lang-btn" id="lang-ru" onclick="applyLang('ru')">RU</button>
+      </div>
+      <button class="theme-toggle" id="theme-btn" onclick="toggleTheme()">☀️</button>
     </div>
   </div>
 
@@ -203,6 +211,16 @@ function applyLang(lang) {
 }
 
 applyLang(localStorage.getItem('tr_lang') || 'en');
+
+function toggleTheme() {
+  const isLight = document.documentElement.classList.toggle('light');
+  document.getElementById('theme-btn').textContent = isLight ? '🌙' : '☀️';
+  localStorage.setItem('theme', isLight ? 'light' : 'dark');
+}
+if (localStorage.getItem('theme') === 'light') {
+  document.documentElement.classList.add('light');
+  document.getElementById('theme-btn').textContent = '🌙';
+}
 </script>
 </body>
 </html>
