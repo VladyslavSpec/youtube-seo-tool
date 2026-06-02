@@ -5,6 +5,8 @@ from pydantic import BaseModel
 from collections import defaultdict
 from datetime import date
 import os
+import re
+import json
 import httpx
 import anthropic
 import stripe
@@ -15,6 +17,8 @@ YOUTUBE_API_KEY = os.environ.get("YOUTUBE_API_KEY")
 
 LIMITS = {"generator": 2, "tool": 3}
 request_counts: dict = defaultdict(lambda: defaultdict(int))
+
+claude = anthropic.Anthropic(api_key=os.environ.get("ANTHROPIC_API_KEY"))
 
 
 def get_client_ip(req: Request) -> str:
@@ -28,17 +32,21 @@ def check_rate_limit(ip: str, tier: str, kind: str = "generator"):
     if tier == "pro":
         return
     today = str(date.today())
+    # purge old keys to prevent memory leak
+    stale = [k for k in request_counts if not k.endswith(today)]
+    for k in stale:
+        del request_counts[k]
     key = f"{ip}:{kind}:{today}"
     request_counts[key]["count"] += 1
     limit = LIMITS.get(kind, 2)
     if request_counts[key]["count"] > limit:
         raise HTTPException(
             status_code=429,
-            detail=f"Free limit of {limit} generations per day reached for this tool. Upgrade to Pro for unlimited access."
+            detail=f"Free limit of {limit} generations per day reached. Upgrade to Pro for unlimited access."
         )
 
-app = FastAPI()
 
+app = FastAPI()
 app.mount("/static", StaticFiles(directory="static"), name="static")
 
 
@@ -47,15 +55,12 @@ def root():
     return FileResponse("static/index.html")
 
 
-class SeoRequest(BaseModel):
-    topic: str
-    language: str = "English"
-    emoji_mode: str = "full"
-    tier: str = "free"
+@app.get("/health")
+def health():
+    return {"status": "ok"}
 
 
-client = anthropic.Anthropic(api_key=os.environ.get("ANTHROPIC_API_KEY"))
-
+# ── SEO GENERATOR ──────────────────────────────────────────────────────────────
 
 EMOJI_INSTRUCTIONS = {
     "none": "Do NOT use any emojis anywhere — no emojis in title, description, or tags.",
@@ -97,14 +102,12 @@ Return ONLY a JSON object with these exact keys:
 
 JSON only, no extra text."""
 
-    message = client.messages.create(
+    message = claude.messages.create(
         model="claude-haiku-4-5-20251001",
         max_tokens=1024,
-        system="You are a YouTube SEO expert. Detect the language of the topic and write ALL output in that same language. If the topic is in Russian, write in Russian. If in English, write in English. Never mix languages. Follow the emoji rule exactly as specified.",
+        system="You are a YouTube SEO expert. Detect the language of the topic and write ALL output in that same language. Never mix languages. Follow the emoji rule exactly as specified.",
         messages=[{"role": "user", "content": prompt}],
     )
-
-    import json
     text = message.content[0].text.strip()
     if text.startswith("```"):
         text = text.split("```")[1]
@@ -113,23 +116,27 @@ JSON only, no extra text."""
     return json.loads(text.strip())
 
 
+class SeoRequest(BaseModel):
+    topic: str
+    language: str = "English"
+    emoji_mode: str = "full"
+    tier: str = "free"
+
+
 @app.post("/generate-seo")
 async def generate_seo(request: SeoRequest, req: Request):
     ip = get_client_ip(req)
     check_rate_limit(ip, request.tier, "generator")
-    result = generate_seo_claude(request.topic, request.language, request.emoji_mode, request.tier)
-    return {
-        "topic": request.topic,
-        "language": request.language,
-        **result,
-    }
+    try:
+        result = generate_seo_claude(request.topic, request.language, request.emoji_mode, request.tier)
+    except json.JSONDecodeError:
+        raise HTTPException(status_code=502, detail="AI returned invalid response. Please try again.")
+    except anthropic.APIError as e:
+        raise HTTPException(status_code=503, detail="AI service temporarily unavailable. Please try again.")
+    return {"topic": request.topic, "language": request.language, **result}
 
 
-class ToolRequest(BaseModel):
-    type: str
-    topic: str
-    tier: str = "free"
-
+# ── INDIVIDUAL TOOLS ───────────────────────────────────────────────────────────
 
 TOOL_PROMPTS = {
     "hashtag": 'Generate 10 trending YouTube hashtags for a video about: "{topic}". Return ONLY a JSON array of hashtag strings with # symbol. No other text.',
@@ -138,32 +145,41 @@ TOOL_PROMPTS = {
 }
 
 
-@app.post("/tool-generate")
-async def tool_generate(request: ToolRequest, req: Request):
-    import json as json_lib
-    ip = get_client_ip(req)
-    check_rate_limit(ip, request.tier, "tool")
-    prompt = TOOL_PROMPTS.get(request.type, "").format(topic=request.topic)
-    message = client.messages.create(
-        model="claude-haiku-4-5-20251001",
-        max_tokens=512,
-        messages=[{"role": "user", "content": prompt}],
-    )
-    text = message.content[0].text.strip()
-    if text.startswith("```"):
-        text = text.split("```")[1]
-        if text.startswith("json"):
-            text = text[4:]
-    return {"result": json_lib.loads(text.strip())}
-
-
-class ExtractRequest(BaseModel):
-    url: str
+class ToolRequest(BaseModel):
+    type: str
+    topic: str
     tier: str = "free"
 
 
+@app.post("/tool-generate")
+async def tool_generate(request: ToolRequest, req: Request):
+    ip = get_client_ip(req)
+    check_rate_limit(ip, request.tier, "tool")
+    prompt_template = TOOL_PROMPTS.get(request.type)
+    if not prompt_template:
+        raise HTTPException(status_code=400, detail="Invalid tool type")
+    prompt = prompt_template.format(topic=request.topic)
+    try:
+        message = claude.messages.create(
+            model="claude-haiku-4-5-20251001",
+            max_tokens=512,
+            messages=[{"role": "user", "content": prompt}],
+        )
+        text = message.content[0].text.strip()
+        if text.startswith("```"):
+            text = text.split("```")[1]
+            if text.startswith("json"):
+                text = text[4:]
+        return {"result": json.loads(text.strip())}
+    except json.JSONDecodeError:
+        raise HTTPException(status_code=502, detail="AI returned invalid response. Please try again.")
+    except anthropic.APIError:
+        raise HTTPException(status_code=503, detail="AI service temporarily unavailable. Please try again.")
+
+
+# ── TAG EXTRACTOR ──────────────────────────────────────────────────────────────
+
 def extract_video_id(url: str) -> str:
-    import re
     patterns = [
         r"youtube\.com/watch\?v=([a-zA-Z0-9_-]{11})",
         r"youtu\.be/([a-zA-Z0-9_-]{11})",
@@ -176,6 +192,11 @@ def extract_video_id(url: str) -> str:
     return ""
 
 
+class ExtractRequest(BaseModel):
+    url: str
+    tier: str = "free"
+
+
 @app.post("/extract-tags")
 async def extract_tags(request: ExtractRequest, req: Request):
     ip = get_client_ip(req)
@@ -183,11 +204,17 @@ async def extract_tags(request: ExtractRequest, req: Request):
     video_id = extract_video_id(request.url)
     if not video_id:
         raise HTTPException(status_code=400, detail="Invalid YouTube URL")
-    async with httpx.AsyncClient() as client_http:
-        resp = await client_http.get(
-            "https://www.googleapis.com/youtube/v3/videos",
-            params={"part": "snippet", "id": video_id, "key": YOUTUBE_API_KEY},
-        )
+    try:
+        async with httpx.AsyncClient(timeout=10.0) as client_http:
+            resp = await client_http.get(
+                "https://www.googleapis.com/youtube/v3/videos",
+                params={"part": "snippet", "id": video_id, "key": YOUTUBE_API_KEY},
+            )
+        resp.raise_for_status()
+    except httpx.TimeoutException:
+        raise HTTPException(status_code=504, detail="YouTube API timed out. Please try again.")
+    except httpx.HTTPError:
+        raise HTTPException(status_code=502, detail="YouTube API unavailable. Please try again.")
     data = resp.json()
     items = data.get("items", [])
     if not items:
@@ -198,17 +225,22 @@ async def extract_tags(request: ExtractRequest, req: Request):
     return {"title": title, "tags": tags, "count": len(tags)}
 
 
+# ── STRIPE ─────────────────────────────────────────────────────────────────────
+
 @app.post("/create-checkout-session")
 async def create_checkout_session(req: Request):
-    base_url = str(req.base_url).rstrip("/")
-    session = stripe.checkout.Session.create(
-        payment_method_types=["card"],
-        line_items=[{"price": STRIPE_PRICE_ID, "quantity": 1}],
-        mode="subscription",
-        success_url=f"{base_url}/static/success.html?session_id={{CHECKOUT_SESSION_ID}}",
-        cancel_url=f"{base_url}/",
-    )
-    return {"url": session.url}
+    try:
+        base_url = str(req.base_url).rstrip("/")
+        session = stripe.checkout.Session.create(
+            payment_method_types=["card"],
+            line_items=[{"price": STRIPE_PRICE_ID, "quantity": 1}],
+            mode="subscription",
+            success_url=f"{base_url}/static/success.html?session_id={{CHECKOUT_SESSION_ID}}",
+            cancel_url=f"{base_url}/",
+        )
+        return {"url": session.url}
+    except stripe.StripeError as e:
+        raise HTTPException(status_code=502, detail="Payment service unavailable. Please try again.")
 
 
 class EmailRequest(BaseModel):
@@ -217,17 +249,22 @@ class EmailRequest(BaseModel):
 
 @app.post("/verify-subscription")
 def verify_subscription(request: EmailRequest):
-    customers = stripe.Customer.list(email=request.email, limit=1)
-    if not customers.data:
+    try:
+        customers = stripe.Customer.list(email=request.email, limit=1)
+        if not customers.data:
+            return {"pro": False}
+        customer = customers.data[0]
+        subscriptions = stripe.Subscription.list(
+            customer=customer.id,
+            status="active",
+            limit=1,
+        )
+        return {"pro": len(subscriptions.data) > 0}
+    except stripe.StripeError:
         return {"pro": False}
-    customer = customers.data[0]
-    subscriptions = stripe.Subscription.list(
-        customer=customer.id,
-        status="active",
-        limit=1,
-    )
-    return {"pro": len(subscriptions.data) > 0}
 
+
+# ── REDDIT POST GENERATOR ──────────────────────────────────────────────────────
 
 SUBREDDITS = {
     "1": {"name": "r/NewTubers", "audience": "new YouTubers struggling to grow", "style": "helpful beginner advice, mention tool casually at end"},
@@ -237,16 +274,16 @@ SUBREDDITS = {
     "5": {"name": "r/EntrepreneurRideAlong", "audience": "entrepreneurs building businesses", "style": "transparent founder update with lessons"},
 }
 
+
 class RedditRequest(BaseModel):
     subreddit_key: str
+
 
 @app.post("/reddit-post")
 async def reddit_post(request: RedditRequest):
     sub = SUBREDDITS.get(request.subreddit_key)
     if not sub:
         raise HTTPException(status_code=400, detail="Invalid subreddit key")
-
-    client = anthropic.Anthropic(api_key=os.environ.get("ANTHROPIC_API_KEY"))
     prompt = f"""You are a Reddit user who built a YouTube SEO tool and wants to share it authentically.
 
 TOOL: TubeRank (gettuberank.com) — free AI YouTube SEO generator: titles, descriptions, tags, hashtags in seconds. Free: 2/day. Pro: $10/mo.
@@ -269,13 +306,16 @@ TITLE: [title here]
 BODY:
 [body here]"""
 
-    message = client.messages.create(
-        model="claude-haiku-4-5-20251001",
-        max_tokens=600,
-        messages=[{"role": "user", "content": prompt}],
-    )
-    raw = message.content[0].text.strip()
-    parts = raw.split("---\nBODY:\n", 1)
-    title = parts[0].replace("TITLE: ", "").strip()
-    body = parts[1].strip() if len(parts) > 1 else raw
-    return {"title": title, "body": body}
+    try:
+        message = claude.messages.create(
+            model="claude-haiku-4-5-20251001",
+            max_tokens=600,
+            messages=[{"role": "user", "content": prompt}],
+        )
+        raw = message.content[0].text.strip()
+        parts = raw.split("---\nBODY:\n", 1)
+        title = parts[0].replace("TITLE: ", "").strip()
+        body = parts[1].strip() if len(parts) > 1 else raw
+        return {"title": title, "body": body}
+    except anthropic.APIError:
+        raise HTTPException(status_code=503, detail="AI service temporarily unavailable. Please try again.")
